@@ -3,6 +3,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class csvWriter {
+	
+	public static void main(String[] Args){
+		csvWriter test = new csvWriter();
+		test.writer();
+		System.out.println("Ich funktioniere!");
+	}
 	public void writer() {
 
 		FileWriter fw;
