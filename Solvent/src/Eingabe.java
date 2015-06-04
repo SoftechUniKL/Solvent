@@ -41,13 +41,6 @@ import javax.swing.SpinnerDateModel;
 
 
 
-
-
-
-
-
-
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -87,29 +80,25 @@ public class Eingabe extends JFrame {
 	 * @throws ParseException 
 	 */
 	public Eingabe () {
-		setTitle("Geben Sie ihren gewünschten Betrag ein");
+		setTitle("Neue Buchung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 398, 243);
+		setBounds(300, 200, 398, 243);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("Datum");
-		
-		JLabel lblNewLabel_1 = new JLabel("Bezeichnung");
-		
-		JLabel lblNewLabel_2 = new JLabel("Betrag");
+		JLabel lblNewLabel = new JLabel("Datum TT/MM/JJJJ");	
+		JLabel lblNewLabel_1 = new JLabel("Bezeichnung");	
+		JLabel lblNewLabel_2 = new JLabel("Betrag in €");
 		
 		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		
+		textField_3.setColumns(10);	
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
 		
 		JLabel lblBuchenAls = new JLabel("Buchen als...");
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Ausgabe");
-		
+
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Ausgabe");	
 		JRadioButton rdbtnEinnahme = new JRadioButton("Einnahme");
 		
 		ButtonGroup bg = new ButtonGroup();
@@ -158,7 +147,7 @@ public class Eingabe extends JFrame {
         			else {
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-            		    f.setSize( 250, 100 );
+            		    f.setSize(470, 100);
             		    f.add( new JLabel( "Bitte wählen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
             		    f.setVisible( true );
         				}
