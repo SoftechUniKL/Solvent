@@ -108,4 +108,5 @@ public class BudgetPlanGUI extends JFrame {
 		});
 	}
 
+
 }

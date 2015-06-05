@@ -17,6 +17,7 @@ public class Posten {
 	 */
 	private double betrag;
 
+
 	/**
 	 * Konstruktor
 	 * 
