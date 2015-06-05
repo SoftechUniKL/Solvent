@@ -20,17 +20,19 @@ public class BudgetPlanModel {
 	List<Posten> ausgaben;
 
 	public BudgetPlanModel() {
-		this.ausgaben = new ArrayList<Posten>();
+		this.ausgaben = new ArrayList<Posten>(); //Initialisieren der Ausgaben als Array mit Posten
 		try {
+			
+		
 			// Zeilenweises Einlesen der Daten
 			CSVReader reader = new CSVReader(new FileReader("data/ausgaben.csv"));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
-				DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN);
-				Date datum = df.parse(nextLine[0]);
-				String bezeichnung = nextLine[1];
-				double betrag = Double.parseDouble(nextLine[2]);
-				ausgaben.add(new Posten(datum, bezeichnung, betrag));
+				DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN); //Erzeugen eines Parse Objekts
+				Date datum = df.parse(nextLine[0]); //Einlesen Datum und Parsing als Datum
+				String bezeichnung = nextLine[1]; //Einlesen der Bezeichnung
+				double betrag = Double.parseDouble(nextLine[2]); //Einlesen des Betrags
+				ausgaben.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray Hinzufügen
 			}
 			reader.close();
 
