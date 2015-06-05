@@ -36,8 +36,12 @@ import java.io.Writer;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
+
+
+
 
 
 
@@ -57,9 +61,8 @@ public class Eingabe extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 
-	/**
-	 * Launch the application.
-	 */
+	
+	//Kreiert ein Fenster 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,11 +77,8 @@ public class Eingabe extends JFrame {
 		
 	}
 	
-
-	/**
-	 * Create the frame.
-	 * @throws ParseException 
-	 */
+	
+	//Nennt das Fenster "Neue Buchung" und fügt Buttons und Eingabefelder hinzu
 	public Eingabe () {
 		setTitle("Neue Buchung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,24 +101,26 @@ public class Eingabe extends JFrame {
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Ausgabe");	
 		JRadioButton rdbtnEinnahme = new JRadioButton("Einnahme");
 		
+		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewählt werden kann 
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnEinnahme);
 		bg.add(rdbtnNewRadioButton);
 		
+		//Kreiert den Button "Fertig" und die Spinner für das Datum
 		JButton btnFertig = new JButton("Fertig");
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+		spinner.setModel(new SpinnerListModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		
 		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(1, 1, 12, 1));
+		spinner_1.setModel(new SpinnerListModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		
 		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerNumberModel(2015, null, 2020, 1));
+		spinner_2.setModel(new SpinnerListModel(new String[] {"2015", "2016", "2017", "2018", "2019", "2020"}));
 
 	
-
 		
+		//Weist dem Button "Fertig" Aktionen beim Klicken zu 
         btnFertig.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
             	if (textField_3.getText().equals("") ) {
@@ -151,6 +153,7 @@ public class Eingabe extends JFrame {
             		    f.add( new JLabel( "Bitte wählen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
             		    f.setVisible( true );
         				}
+        			dispose();
         		}
             }
             	 
@@ -160,8 +163,9 @@ public class Eingabe extends JFrame {
         			fw = new FileWriter("data/einnahmen.csv",true);
         			String a =  Double.valueOf(spinner.getValue().toString()).intValue()+ "." + Double.valueOf(spinner_1.getValue().toString()).intValue() + "." + Double.valueOf(spinner_2.getValue().toString()).intValue(); //Datum ist in String format
         			BufferedWriter bw = new BufferedWriter(fw);
-        			String test = a + ", " + textField_3.getText() + ", " + textField_4.getText();
+        			String test = a + ", " + textField_3.getText() + ", " + textField_4.getText()+ "\n";
         			bw.write(test);
+        			
         			bw.close();
         			} 
         		catch (IOException e) {
@@ -175,7 +179,7 @@ public class Eingabe extends JFrame {
             			fw = new FileWriter("data/ausgaben.csv",true);
             			String a =  Double.valueOf(spinner.getValue().toString()).intValue()+ "." + Double.valueOf(spinner_1.getValue().toString()).intValue() + "." + Double.valueOf(spinner_2.getValue().toString()).intValue(); //Datum ist in String format
             			BufferedWriter bw = new BufferedWriter(fw);
-            			String test = a + ", " + textField_3.getText() + ", " + textField_4.getText();
+            			String test = a + ", " + textField_3.getText() + ", " + textField_4.getText() + "\n";
             			bw.write(test);
             			bw.close();
                			} 
@@ -189,7 +193,7 @@ public class Eingabe extends JFrame {
             }
         );	
 		       
-	
+        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
