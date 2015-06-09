@@ -183,6 +183,7 @@ public class Eingabe extends JFrame {
             			String test = a + ", " + textField_3.getText() + ", " + textField_4.getText() + "\n";
             			bw.write(test);
             			bw.close();
+            			dispose();
                			} 
             		catch (IOException e) {
             			// TODO Auto-generated catch block
