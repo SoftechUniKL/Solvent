@@ -1,4 +1,4 @@
-import java.awt.FlowLayout;
+ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -107,5 +107,6 @@ public class BudgetPlanGUI extends JFrame {
 
 		});
 	}
+
 
 }
