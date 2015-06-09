@@ -16,7 +16,7 @@ public class csvWriter {
 			fw = new FileWriter("data/testbudget.csv");
 
 			BufferedWriter bw = new BufferedWriter(fw);
-			String test = "13.12.2015,Testausgabe, 299.90";
+			String test = "13.12.2015,Testausgabe,299.90";
 			bw.write(test);
 			bw.close();
 

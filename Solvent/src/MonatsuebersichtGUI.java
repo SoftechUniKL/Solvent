@@ -19,7 +19,7 @@ import org.jfree.ui.RefineryUtilities;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class Monatsuebersicht extends JFrame {
+public class MonatsuebersichtGUI extends JFrame {
 
 	private JPanel contentPane;
 	private final JButton btnSparen = new JButton("Sparen");
@@ -32,7 +32,7 @@ public class Monatsuebersicht extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Monatsuebersicht frame = new Monatsuebersicht();
+					MonatsuebersichtGUI frame = new MonatsuebersichtGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class Monatsuebersicht extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Monatsuebersicht() {
+	public MonatsuebersichtGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
