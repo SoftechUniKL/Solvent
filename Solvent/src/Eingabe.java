@@ -152,9 +152,9 @@ public class Eingabe extends JFrame {
             		    f.setSize(470, 100);
             		    f.add( new JLabel( "Bitte wählen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
             		    f.setVisible( true );
-        				}
-        			dispose();
         		}
+        		}
+        			
             }
             	 
             void writer_einnahmen() {
@@ -167,6 +167,7 @@ public class Eingabe extends JFrame {
         			bw.write(test);
         			
         			bw.close();
+        			dispose();
         			} 
         		catch (IOException e) {
         			// TODO Auto-generated catch block
