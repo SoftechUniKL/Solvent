@@ -30,6 +30,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class MonatsuebersichtGUI extends JFrame {
 
+	private JMenuBar menuBar;
+	private JButton btnStart; 
+	private JPanel contentPane;
 	/**
 	 * Launch the application.
 	 */
@@ -56,14 +59,14 @@ public class MonatsuebersichtGUI extends JFrame {
 		setBounds(100, 100, 700, 700);
 
 		// Menüband am oberen Bildschirm
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuBar.setBackground(Color.GRAY);
 		setJMenuBar(menuBar);
 
-		JButton btnStart = new JButton("Start");
+		btnStart = new JButton("Start");
 		btnStart.setBackground(Color.GRAY);
 		menuBar.add(btnStart);
-
+		
 		JButton btnAusgaben = new JButton("Ausgaben");
 		btnAusgaben.setBackground(Color.GRAY);
 		menuBar.add(btnAusgaben);
@@ -88,12 +91,10 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnSparen.setBackground(Color.GRAY);
 		menuBar.add(btnSparen);
 
-		JPanel contentPane;
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
 
 		// Dem Benutzer die Möglichkeit hoch bzw runter zu scrollen
 		JScrollBar scrollBar = new JScrollBar();
@@ -101,6 +102,8 @@ public class MonatsuebersichtGUI extends JFrame {
 
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				// Überschrift
 				JLabel lblMonatsbersicht = new JLabel("Monats\u00FCbersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
@@ -175,6 +178,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	    					.addContainerGap(20, Short.MAX_VALUE))
 	    			);
 	    		contentPane.setLayout(gl_contentPane);
+	    		//contentPane.removeAll();
 	    	
 
 				btnHinzufuegen.addActionListener(new ActionListener() {
@@ -196,12 +200,14 @@ public class MonatsuebersichtGUI extends JFrame {
 
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				System.out.println("Ich funktioniere!");
 				// Tabelle mit einer Monatsübersicht
 				JTable table;
 				table = new JTable();
 				table.setVisible(true);
-				table.setBackground(Color.LIGHT_GRAY);
+				table.setBackground(Color.BLUE);
 				table.setModel(new DefaultTableModel(new Object[][] {
 						{ "Monat", "Saldo" }, { null, null }, { null, null },
 						{ null, null }, { null, null }, { null, null },
@@ -213,14 +219,19 @@ public class MonatsuebersichtGUI extends JFrame {
 
 				// Graphische Darstellung
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-				JFreeChart chart = ChartFactory.createLineChart("Übersicht",
-						"Monat", "Ausgaben", dataset);
+				JFreeChart chart = ChartFactory.createLineChart("Übersicht","Monat", "Ausgaben", dataset);
 				ChartPanel chartPanel = new ChartPanel(chart);
 				getContentPane().add(chartPanel, BorderLayout.CENTER);
-				chartPanel.setBackground(Color.LIGHT_GRAY);
+				chartPanel.setBackground(Color.BLUE);
+				
+				
 			}
 		});
+		
+		btnStart.doClick();
+		
 
 	}
+	
 
 }
