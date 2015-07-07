@@ -10,17 +10,32 @@ import com.opencsv.CSVReader;
 public class Monatsübersicht	{
 	public static void main(String[]args)	{
 		
+		int[] Monat = {1,2,3,4,5,6,7,8,9,10,11,12};
+		//ArrayList<String> EinnahmenJanuar = new ArrayList<String>();
+		//ArrayList<String> EinnahmenFebruar = new ArrayList<String>();
+		//ArrayList<String> EinnahmenMärz = new ArrayList<String>();
+		//ArrayList<String> EinnahmenApril = new ArrayList<String>();
+		//ArrayList<String> EinnahmenMai = new ArrayList<String>();
+		//ArrayList<String> EinnahmenJuni = new ArrayList<String>();
+		//ArrayList<String> EinnahmenJuli = new ArrayList<String>();
+		//ArrayList<String> EinnahmenAugust = new ArrayList<String>();
+		//ArrayList<String> EinnahmenSeptember = new ArrayList<String>();
+		//ArrayList<String> EinnahmenOktober = new ArrayList<String>();
+		//ArrayList<String> EinnahmenNovember = new ArrayList<String>();
+		//ArrayList<String> EinnahmenDezember = new ArrayList<String>();
+		
+		
 		//Datei einlesen und splitten
 		FileReader myFile = null;
 		BufferedReader buff = null;
-		final ArrayList<String> lines = new ArrayList<String>();
+		final ArrayList<String> einnahmen = new ArrayList<String>();
 		try	{
-			myFile = new FileReader("data/ausgaben.csv");
+			myFile = new FileReader("data/einnahmen.csv");
 			buff = new BufferedReader(myFile);
-			String line;
-			while ((line = buff.readLine()) != null)	{
-				System.out.println(line);
-				lines.add(line);
+			String einnahme;
+			while ((einnahme = buff.readLine()) != null)	{
+				System.out.println(einnahme);
+				einnahmen.add(einnahme);
 			}
 		} catch(IOException e)	{
 			System.err.println("Error2: " + e );
@@ -31,17 +46,20 @@ public class Monatsübersicht	{
 			 } catch (IOException e) {
 		            System.err.println("Error2 :" + e);
 		}
+			 
 	}
-		final String[][] valuesArray = new String[lines.size()][];
+		final String[][] Budget = new String[einnahmen.size()][];
 	    int cnt = 0;
-	    for (final String line : lines) {
-	        valuesArray[cnt++] = line.split(",");
+	    for (final String einnahme : einnahmen) {
+	        Budget[cnt++] = einnahme.split(",");
 	    }
 	 
 	    // Ausgabe des Array
-	    for (String[] arr : valuesArray) {
+	    for (String[] arr : Budget) {
 	        System.out.println(Arrays.toString(arr));
 	    }
+
 	}
+	
 }
 	 
