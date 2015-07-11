@@ -1,33 +1,40 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JButton;
-
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.GroupLayout;
-import javax.swing.JScrollBar;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+
+import com.opencsv.CSVReader;
 
 public class MonatsuebersichtGUI extends JFrame {
 
@@ -60,7 +67,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
 
-		// Menüband am oberen Bildschirm
+		// Menï¿½band am oberen Bildschirm
 		menuBar = new JMenuBar();
 		menuBar.setBackground(Color.GRAY);
 		setJMenuBar(menuBar);
@@ -98,13 +105,13 @@ public class MonatsuebersichtGUI extends JFrame {
 		setContentPane(contentPane);
 		
 
-		// Dem Benutzer die Möglichkeit hoch bzw runter zu scrollen
+		// Dem Benutzer die Mï¿½glichkeit hoch bzw runter zu scrollen
 		JScrollBar scrollBar = new JScrollBar();
 		contentPane.add(scrollBar, BorderLayout.EAST);
 
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Überschrift
+				// ï¿½berschrift
 				JLabel lblMonatsbersicht = new JLabel("Monats\u00FCbersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblMonatsbersicht, BorderLayout.NORTH);
@@ -115,7 +122,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
 
 				JButton btnSparziel = new JButton(
-						"Neues Sparziel/Schulden hinzufügen");
+						"Neues Sparziel/Schulden hinzufï¿½gen");
 				JButton btnHinzufuegen = new JButton(
 						"Neue Buchung hinzuf\u00FCgen");
 				JLabel lblHierEinnahmenEinfgen = new JLabel(
@@ -198,12 +205,13 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 		});
 
+		
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
 				System.out.println("Ich funktioniere!");
-				// Tabelle mit einer Monatsübersicht
+				// Tabelle mit einer Monatsï¿½bersicht
 				JTable table;
 				table = new JTable();
 				table.setVisible(true);
@@ -219,7 +227,7 @@ public class MonatsuebersichtGUI extends JFrame {
 
 				// Graphische Darstellung
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-				JFreeChart chart = ChartFactory.createLineChart("Übersicht","Monat", "Ausgaben", dataset);
+				JFreeChart chart = ChartFactory.createLineChart("ï¿½bersicht","Monat", "Ausgaben", dataset);
 				ChartPanel chartPanel = new ChartPanel(chart);
 				getContentPane().add(chartPanel, BorderLayout.CENTER);
 				chartPanel.setBackground(Color.BLUE);
@@ -227,6 +235,71 @@ public class MonatsuebersichtGUI extends JFrame {
 				
 			}
 		});
+		btnAusgaben.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Test");
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				setContentPane(contentPane);
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+			
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setViewportBorder(null);
+				scrollPane.setBorder(null);
+				     
+				
+				
+		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
+				
+				
+				ArrayList<Posten> ausgaben = CSVReader("data/ausgaben.csv");
+				
+				Object[][] data = new Object[ausgaben.size()][3];
+				int i = 0;
+				for (Posten p : ausgaben) {
+					data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
+							.format(p.getDatum());
+					data[i][1] = p.getBezeichnung();
+					data[i][2] = String.format("%.2f", p.getBetrag());
+					i++;
+				}
+				
+			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung",
+				"Betrag" });
+			JScrollPane scrollpane = new JScrollPane(table);
+
+			// Kreisdiagramm
+			DefaultPieDataset pd = new DefaultPieDataset();
+			for (Posten p : ausgaben) {
+				pd.setValue(p.getBezeichnung(), p.getBetrag());
+			}
+			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
+			ChartPanel panel = new ChartPanel(pie);
+
+	
+			// Elemente dem Fenster hinzufuegen:
+			//getContentPane().add(scrollpane);
+			//getContentPane().add(panel);
+			// Berechnet Layout mit geringstem Platzbedarf
+			//pack();
+			GroupLayout gl_contentPane = new GroupLayout(contentPane);
+			gl_contentPane.setHorizontalGroup(
+				gl_contentPane.createParallelGroup()
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblUebersicht)
+					.addGroup(gl_contentPane.createParallelGroup())
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING))
+							.addComponent(scrollpane))
+							.addComponent(panel)
+
+						.addContainerGap(39, Short.MAX_VALUE))
+			);
+		}
+
+			});
 		
 		
 		
@@ -237,7 +310,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Ausgaben");
 			
 				
 				JScrollPane scrollPane = new JScrollPane();
@@ -291,5 +364,37 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnStart.doClick();
 	}
 	
+	public ArrayList<Posten> CSVReader(String filename) {
+		ArrayList<Posten> ausgaben = new ArrayList<Posten>(); //Initialisieren der Ausgaben als Array mit Posten
+		try {
+			
+		
+			// Zeilenweises Einlesen der Daten
+			CSVReader reader = new CSVReader(new FileReader(filename));
+			String[] nextLine;
+			while ((nextLine = reader.readNext()) != null) {
+				DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN); //Erzeugen eines Parse Objekts
+				Date datum = df.parse(nextLine[0]); //Einlesen Datum und Parsing als Datum
+				String bezeichnung = nextLine[1]; //Einlesen der Bezeichnung
+				double betrag = Double.parseDouble(nextLine[2]); //Einlesen des Betrags
+				ausgaben.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray HinzufÃ¼gen
+			}
+			reader.close();
 
+		} catch (FileNotFoundException e) {
+			System.err
+					.println("Die Datei data/budget.csv wurde nicht gefunden!");
+			System.exit(1);
+		} catch (IOException e) {
+			System.err
+					.println("Probleme beim Oeffnen der Datei data/budget.csv!");
+			System.exit(1);
+		} catch (ParseException e) {
+			System.err
+					.println("Formatfehler: Die Datei konnte nicht eingelesen werden!");
+			System.exit(1);
+		}
+	return ausgaben;
+	}
+		
 }
