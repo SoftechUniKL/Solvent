@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import com.opencsv.CSVReader;
 
-public class Monatsübersicht	{
+public class MonatsÃ¼bersicht	{
 	public static void main(String[]args)	{
 		
 		//Datei einlesen und splitten
