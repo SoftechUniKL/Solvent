@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -30,9 +31,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class MonatsuebersichtGUI extends JFrame {
 
+	private JTable Tabelle;	
 	private JMenuBar menuBar;
-	private JButton btnStart; 
 	private JPanel contentPane;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +65,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		menuBar.setBackground(Color.GRAY);
 		setJMenuBar(menuBar);
 
-		btnStart = new JButton("Start");
+		JButton btnStart = new JButton("Start");
 		btnStart.setBackground(Color.GRAY);
 		menuBar.add(btnStart);
 		
@@ -102,8 +104,6 @@ public class MonatsuebersichtGUI extends JFrame {
 
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
 				// Überschrift
 				JLabel lblMonatsbersicht = new JLabel("Monats\u00FCbersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
@@ -178,7 +178,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	    					.addContainerGap(20, Short.MAX_VALUE))
 	    			);
 	    		contentPane.setLayout(gl_contentPane);
-	    		//contentPane.removeAll();
+	    		contentPane.removeAll();
 	    	
 
 				btnHinzufuegen.addActionListener(new ActionListener() {
@@ -228,9 +228,67 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 		});
 		
-		btnStart.doClick();
 		
-
+		
+		btnSparen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Test");
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				setContentPane(contentPane);
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+			
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setViewportBorder(null);
+				scrollPane.setBorder(null);
+				     
+				
+				
+		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
+				GroupLayout gl_contentPane = new GroupLayout(contentPane);
+				gl_contentPane.setHorizontalGroup(
+					gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblUebersicht)
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 623, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap(39, Short.MAX_VALUE))
+				);
+				gl_contentPane.setVerticalGroup(
+					gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblUebersicht, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addGap(149))
+				);
+				
+				Tabelle = new JTable();
+				scrollPane.setViewportView(Tabelle);
+				Tabelle.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null, null, null, null},
+						{null, null, null, null, null, null},
+						{null, null, null, null, null, null},
+						{null, null, null, null, null, null},
+						{null, null, null, null, null, null},
+					},
+					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
+				));
+				Tabelle.getColumnModel().getColumn(0).setPreferredWidth(141);
+				Tabelle.getColumnModel().getColumn(1).setPreferredWidth(83);
+				Tabelle.getColumnModel().getColumn(5).setPreferredWidth(93);
+				Tabelle.setToolTipText("");
+				contentPane.setLayout(gl_contentPane);
+			}
+				
+			
+		});
+		
+		btnStart.doClick();
 	}
 	
 
