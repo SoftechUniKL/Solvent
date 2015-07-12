@@ -301,6 +301,72 @@ public class MonatsuebersichtGUI extends JFrame {
 
 			});
 		
+		btnEinnahmen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Test");
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				setContentPane(contentPane);
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+			
+				
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setViewportBorder(null);
+				scrollPane.setBorder(null);
+				     
+				
+				
+		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
+				
+				
+				ArrayList<Posten> ausgaben = CSVReader("data/einnahmen.csv");
+				
+				Object[][] data = new Object[ausgaben.size()][3];
+				int i = 0;
+				for (Posten p : ausgaben) {
+					data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
+							.format(p.getDatum());
+					data[i][1] = p.getBezeichnung();
+					data[i][2] = String.format("%.2f", p.getBetrag());
+					i++;
+				}
+				
+			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung",
+				"Betrag" });
+			JScrollPane scrollpane = new JScrollPane(table);
+
+			// Kreisdiagramm
+			DefaultPieDataset pd = new DefaultPieDataset();
+			for (Posten p : ausgaben) {
+				pd.setValue(p.getBezeichnung(), p.getBetrag());
+			}
+			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
+			ChartPanel panel = new ChartPanel(pie);
+
+	
+			// Elemente dem Fenster hinzufuegen:
+			//getContentPane().add(scrollpane);
+			//getContentPane().add(panel);
+			// Berechnet Layout mit geringstem Platzbedarf
+			//pack();
+			GroupLayout gl_contentPane = new GroupLayout(contentPane);
+			gl_contentPane.setHorizontalGroup(
+				gl_contentPane.createParallelGroup()
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblUebersicht)
+					.addGroup(gl_contentPane.createParallelGroup())
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING))
+							.addComponent(scrollpane))
+							.addComponent(panel)
+
+						.addContainerGap(39, Short.MAX_VALUE))
+			);
+		}
+
+			});
+		
 		
 		
 		btnSparen.addActionListener(new ActionListener() {
