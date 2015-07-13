@@ -65,7 +65,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	public MonatsuebersichtGUI() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 700);
+		setBounds(100, 100, 750, 700);
 
 		// Men�band am oberen Bildschirm
 		menuBar = new JMenuBar();
