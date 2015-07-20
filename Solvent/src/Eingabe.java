@@ -198,7 +198,7 @@ import java.util.Calendar;
     			fw = new FileWriter("data/"+n+".csv",true);
     			String a = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
     			BufferedWriter bw = new BufferedWriter(fw);
-    			String test = a + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ ";";
+    			String test = a + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ "\n";
     			bw.write(test);
     			bw.close();
     			} 

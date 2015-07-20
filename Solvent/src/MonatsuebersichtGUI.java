@@ -34,6 +34,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	private JTable Tabelle;	
 	private JMenuBar menuBar;
 	private JPanel contentPane;
+	private Sparziel sparziel;
 	
 	/**
 	 * Launch the application.
@@ -191,8 +192,8 @@ public class MonatsuebersichtGUI extends JFrame {
 
 				btnSparziel.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Sparziel obj = new Sparziel();
-						obj.setVisible(true);
+						sparziel = new Sparziel();
+						sparziel.setVisible(true);
 					}
 				});
 			}
@@ -232,6 +233,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		
 		btnSparen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sparziel = new Sparziel();
 				
 				System.out.println("Test");
 				contentPane = new JPanel();
@@ -269,12 +271,13 @@ public class MonatsuebersichtGUI extends JFrame {
 				Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
 				Tabelle.setModel(new DefaultTableModel(
+						
 					new Object[][] {
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
+						{sparziel.readCSV(0, 0), sparziel.readCSV(0, 1), sparziel.readCSV(0, 2), sparziel.readCSV(0, 3), sparziel.readCSV(0, 4), null},
+						{sparziel.readCSV(1, 0), sparziel.readCSV(1, 1), sparziel.readCSV(1, 2), sparziel.readCSV(1, 3), sparziel.readCSV(1, 4), null},
+						{sparziel.readCSV(2, 0), sparziel.readCSV(2, 1), sparziel.readCSV(2, 2), sparziel.readCSV(2, 3), sparziel.readCSV(2, 4), null},
+						{sparziel.readCSV(3, 0), sparziel.readCSV(3, 1), sparziel.readCSV(3, 2), sparziel.readCSV(3, 3), sparziel.readCSV(3, 4), null},
+						{sparziel.readCSV(4, 0), sparziel.readCSV(4, 1), sparziel.readCSV(4, 2), sparziel.readCSV(4, 3), sparziel.readCSV(4, 4), null},
 					},
 					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
 				));
