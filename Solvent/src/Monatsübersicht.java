@@ -10,7 +10,7 @@ import com.opencsv.CSVReader;
 public class Monatsübersicht	{
 	public static void main(String[]args)	{
 		
-		int[] Monat = {1,2,3,4,5,6,7,8,9,10,11,12};
+		//int[] Monat = {1,2,3,4,5,6,7,8,9,10,11,12};
 		//ArrayList<String> EinnahmenJanuar = new ArrayList<String>();
 		//ArrayList<String> EinnahmenFebruar = new ArrayList<String>();
 		//ArrayList<String> EinnahmenMärz = new ArrayList<String>();
