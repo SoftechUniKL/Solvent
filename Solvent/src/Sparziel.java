@@ -153,10 +153,7 @@ public Sparziel () {
         			System.out.println("Daten konnten nicht gespeichert werden!");
         			e.printStackTrace();
         			}
-            } 
-            
-            	
-            
+            }      
             }
         );
 		       
@@ -219,48 +216,26 @@ public Sparziel () {
 	}
 
 
-
-
-
 public String readCSV(int r, int c) {
-	
-	String[][] erg;
-    erg = new String[5][5];
+	String[][] erg = new String[5][5];
     try {
-        java.io.BufferedReader FileReader=new java.io.BufferedReader(
-                    new java.io.FileReader(new java.io.File("data/sparen.csv")
-                    )
-                );
-      
+        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
         String zeile="";
-        int o = 0;
+        int i = 0;
         while(null!=(zeile=FileReader.readLine())){         
             String[] split=zeile.split(",");
             for(int j = 0; j<split.length;j++){
-            	erg[o][j] = split[j];
+            	erg[i][j] = split[j];
             	}
-            o++;
-
-            
-
-            
+            i++;
         }
-        
-        
+        FileReader.close();
         return erg[r][c];
-       
     } catch (Exception e) {
         e.printStackTrace();
+        System.out.println("Daten können nicht aufgerufen werden");
     }
     return null;
 }
-
-
-
-
-
-
-
-
 	
 }
