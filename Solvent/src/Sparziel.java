@@ -197,7 +197,7 @@ public Sparziel () {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-<<<<<<< HEAD
+
 
 
 
@@ -236,6 +236,5 @@ return i;
 }
 
 
-=======
->>>>>>> origin/master
+
 }
