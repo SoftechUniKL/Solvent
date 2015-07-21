@@ -35,9 +35,9 @@ public class Sparziel extends JFrame {
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
 
 	
-	//Nennt das Fenster "Neue Buchung" und fügt Buttons und Eingabefelder hinzu
+	//Nennt das Fenster "Neue Buchung" und fï¿½gt Buttons und Eingabefelder hinzu
 public Sparziel () {
-		
+		//hallo du!!
 		
 		
 		setTitle("Neues Ziel setzen");
@@ -61,12 +61,12 @@ public Sparziel () {
 		JRadioButton rdbtnSparziel = new JRadioButton("Sparziel");	
 		JRadioButton rdbtnSchulden = new JRadioButton("Schulden");
 		
-		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewählt werden kann 
+		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewï¿½hlt werden kann 
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnSchulden);
 		bg.add(rdbtnSparziel);
 		
-		//Kreiert den Button "Fertig" und die Spinner für das Datum
+		//Kreiert den Button "Fertig" und die Spinner fï¿½r das Datum
 		JButton btnFertig = new JButton("Fertig");
 		
 		long now = (new Date()).getTime();
@@ -112,7 +112,7 @@ public Sparziel () {
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
             		    f.setSize(470, 100);
-            		    f.getContentPane().add( new JLabel( "Bitte wählen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
+            		    f.getContentPane().add( new JLabel( "Bitte wï¿½hlen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
             		    f.setVisible( true );
         		}
         		}
@@ -219,7 +219,7 @@ public String readCSV(int r, int c) {
         return erg[r][c];
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Daten können nicht aufgerufen werden");
+        System.out.println("Daten kï¿½nnen nicht aufgerufen werden");
     }
     return null;
 }
