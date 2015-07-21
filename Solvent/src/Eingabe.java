@@ -197,8 +197,10 @@ import java.util.Calendar;
     		try {
     			fw = new FileWriter("data/"+n+".csv",true);
     			String a = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
+    			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    			String uhrzeit = sdf.format(new Date());
     			BufferedWriter bw = new BufferedWriter(fw);
-    			String test = a + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ "\n";
+    			String test = a + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ ","+ uhrzeit +"\n";
     			bw.write(test);
     			bw.close();
     			} 

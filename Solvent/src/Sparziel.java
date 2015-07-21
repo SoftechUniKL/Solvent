@@ -43,6 +43,9 @@ public class Sparziel extends JFrame {
 	private JTextField textField_bezeichnung;
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
 	
+
+	
+	
 	
 	//Nennt das Fenster "Neue Buchung" und fügt Buttons und Eingabefelder hinzu
 public Sparziel () {
@@ -145,7 +148,9 @@ public Sparziel () {
         			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         			String dateToday = dateFormatter.format(date);
         			BufferedWriter bw = new BufferedWriter(fw);
-        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ "\n";
+        			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        			String uhrzeit = sdf.format(new Date());
+        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ "," + uhrzeit+  "\n";
         			bw.write(test);
         			bw.close();
         			} 
@@ -216,6 +221,8 @@ public Sparziel () {
 	}
 
 
+
+
 public String readCSV(int r, int c) {
 	String[][] erg = new String[5][5];
     try {
@@ -238,4 +245,16 @@ public String readCSV(int r, int c) {
     return null;
 }
 	
+public int erreicht(){
+for(int i = 0; i < 5; i++){
+    if (readCSV(i,1) == "Schuld"){
+    System.out.println("Treffer");
+		
+	}
+}
+int i =0;
+return i;
+}
+
+
 }

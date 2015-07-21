@@ -200,7 +200,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 		});
 		/**
-		 * Fügt dem Button Übersicht eine Aktion beim Klicken hinzu
+		 * Fügt dem Button Monatsübersicht eine Aktion beim Klicken hinzu
 		 */
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
