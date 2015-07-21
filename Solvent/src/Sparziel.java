@@ -37,7 +37,7 @@ public class Sparziel extends JFrame {
 	
 	//Nennt das Fenster "Neue Buchung" und f�gt Buttons und Eingabefelder hinzu
 public Sparziel () {
-		//hallo du!!
+		
 		
 		
 		setTitle("Neues Ziel setzen");
