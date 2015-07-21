@@ -1,8 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,12 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -35,12 +28,27 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.opencsv.CSVReader;
+//github.com/SoftechUniKL/Solvent
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+//github.com/SoftechUniKL/Solvent
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+//github.com/SoftechUniKL/Solvent
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class MonatsuebersichtGUI extends JFrame {
-
-	private JTable Tabelle;	
+	
 	private JMenuBar menuBar;
 	private JPanel contentPane;
+	private Sparziel sparziel;
+	
 	
 	/**
 	 * Launch the application.
@@ -67,7 +75,10 @@ public class MonatsuebersichtGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 700);
 
-		// Men�band am oberen Bildschirm
+
+		/**
+		 * F�gt der Men�bar Buttons hinzu
+		 */
 		menuBar = new JMenuBar();
 		menuBar.setBackground(Color.GRAY);
 		setJMenuBar(menuBar);
@@ -84,11 +95,11 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnEinnahmen.setBackground(Color.GRAY);
 		menuBar.add(btnEinnahmen);
 
-		JButton btnTbersicht = new JButton("T-\u00DCbersicht");
+		JButton btnTbersicht = new JButton("Monats�bersicht");
 		btnTbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnTbersicht);
 
-		JButton btnMonatsbersicht = new JButton("Monats\u00FCbersicht");
+		JButton btnMonatsbersicht = new JButton("Jahres�bersicht");
 		btnMonatsbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnMonatsbersicht);
 
@@ -103,37 +114,35 @@ public class MonatsuebersichtGUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
 
-		// Dem Benutzer die M�glichkeit hoch bzw runter zu scrollen
+
+		/** 
+		 * Gibt demBenutzer die M�glichkeit hoch bzw runter zu scrollen
+		 */
 		JScrollBar scrollBar = new JScrollBar();
 		contentPane.add(scrollBar, BorderLayout.EAST);
 
+		/**
+		 * F�gt dem Button Start eine Aktion beim Klicken hinzu
+		 */
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// �berschrift
+
 				JLabel lblMonatsbersicht = new JLabel("Monats\u00FCbersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblMonatsbersicht, BorderLayout.NORTH);
 
-				JLabel lblNewLabel = new JLabel(
-						"Ihre \u00DCbersicht f\u00FCr diesen Monat");
+				JLabel lblNewLabel = new JLabel("Ihre \u00DCbersicht f\u00FCr diesen Monat");
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
 
-				JButton btnSparziel = new JButton(
-						"Neues Sparziel/Schulden hinzuf�gen");
-				JButton btnHinzufuegen = new JButton(
-						"Neue Buchung hinzuf\u00FCgen");
-				JLabel lblHierEinnahmenEinfgen = new JLabel(
-						"Hier Einnahmen einf\u00FCgen");
-				JLabel lblHierAusgabenEinfgen = new JLabel(
-						"Hier Ausgaben einf\u00FCgen");
+				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzuf�gen");
+				JButton btnHinzufuegen = new JButton("Neue Buchung hinzuf\u00FCgen");
+				JLabel lblHierEinnahmenEinfgen = new JLabel("Hier Einnahmen einf\u00FCgen");
+				JLabel lblHierAusgabenEinfgen = new JLabel("Hier Ausgaben einf\u00FCgen");
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
-				JLabel lblRestbudgetEinfgen = new JLabel(
-						"Restbudget einf\u00FCgen");
+				JLabel lblRestbudgetEinfgen = new JLabel("Restbudget einf\u00FCgen");
 
-				   //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 	    		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 	    		gl_contentPane.setHorizontalGroup(
 	    			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -187,25 +196,25 @@ public class MonatsuebersichtGUI extends JFrame {
 	    		contentPane.setLayout(gl_contentPane);
 	    		contentPane.removeAll();
 	    	
-
 				btnHinzufuegen.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Eingabe obj = new Eingabe();
 						obj.setVisible(true);
-
 					}
 				});
 
 				btnSparziel.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Sparziel obj = new Sparziel();
-						obj.setVisible(true);
+						sparziel = new Sparziel();
+						sparziel.setVisible(true);
 					}
 				});
 			}
 		});
 
-		
+		/**
+		 * F�gt dem Button Monats�bersicht eine Aktion beim Klicken hinzu
+		 */
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -231,7 +240,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				ChartPanel chartPanel = new ChartPanel(chart);
 				getContentPane().add(chartPanel, BorderLayout.CENTER);
 				chartPanel.setBackground(Color.BLUE);
-				
 				
 			}
 		});
@@ -368,65 +376,84 @@ public class MonatsuebersichtGUI extends JFrame {
 			});
 		
 		
-		
+		/**
+		 * F�gt dem Button Sparen eine Aktion beim Klicken hinzu
+		 */
 		btnSparen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sparziel = new Sparziel();
 				
 				System.out.println("Test");
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Ausgaben");
-			
+
+				JLabel lblRestbudget = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
+
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setViewportBorder(null);
-				scrollPane.setBorder(null);
-				     
+				scrollPane.setEnabled(false);
+				scrollPane.setBorder( BorderFactory.createEmptyBorder() );
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 				
+				JTable Tabelle = new JTable();
+				scrollPane.setViewportView(Tabelle);
+				Tabelle.setModel(new DefaultTableModel(
+						
+					new Object[][] {
+						{sparziel.readCSV(0, 0), sparziel.readCSV(0, 1), sparziel.readCSV(0, 2), sparziel.readCSV(0, 3), sparziel.readCSV(0, 4), sparziel.erreicht()},
+						{sparziel.readCSV(1, 0), sparziel.readCSV(1, 1), sparziel.readCSV(1, 2), sparziel.readCSV(1, 3), sparziel.readCSV(1, 4), sparziel.erreicht()},
+						{sparziel.readCSV(2, 0), sparziel.readCSV(2, 1), sparziel.readCSV(2, 2), sparziel.readCSV(2, 3), sparziel.readCSV(2, 4), null},
+						{sparziel.readCSV(3, 0), sparziel.readCSV(3, 1), sparziel.readCSV(3, 2), sparziel.readCSV(3, 3), sparziel.readCSV(3, 4), null},
+						{sparziel.readCSV(4, 0), sparziel.readCSV(4, 1), sparziel.readCSV(4, 2), sparziel.readCSV(4, 3), sparziel.readCSV(4, 4), null},
+					},
+					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
+				));
+			
+				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+				rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+				Tabelle.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+				Tabelle.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 				
-		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
+				DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+				Tabelle.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+				Tabelle.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+				Tabelle.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+				
+				Tabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
+				Tabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
+				Tabelle.getColumnModel().getColumn(2).setPreferredWidth(60);
+				Tabelle.getColumnModel().getColumn(3).setPreferredWidth(60);
+				Tabelle.getColumnModel().getColumn(4).setPreferredWidth(50);
+				Tabelle.getColumnModel().getColumn(5).setPreferredWidth(50);
+				Tabelle.setToolTipText("");
+				contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblRestbudget, scrollPane, Tabelle}));
+				
 				GroupLayout gl_contentPane = new GroupLayout(contentPane);
 				gl_contentPane.setHorizontalGroup(
 					gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblUebersicht)
-								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 623, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(39, Short.MAX_VALUE))
+								.addComponent(lblRestbudget, GroupLayout.PREFERRED_SIZE, 345, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
+							.addContainerGap())
 				);
 				gl_contentPane.setVerticalGroup(
-					gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblUebersicht, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGap(18)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-							.addGap(149))
+							.addComponent(lblRestbudget, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(141, Short.MAX_VALUE))
 				);
-				
-				Tabelle = new JTable();
-				scrollPane.setViewportView(Tabelle);
-				Tabelle.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-						{null, null, null, null, null, null},
-					},
-					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
-				));
-				Tabelle.getColumnModel().getColumn(0).setPreferredWidth(141);
-				Tabelle.getColumnModel().getColumn(1).setPreferredWidth(83);
-				Tabelle.getColumnModel().getColumn(5).setPreferredWidth(93);
-				Tabelle.setToolTipText("");
 				contentPane.setLayout(gl_contentPane);
-			}
-				
+			}	
 			
 		});
-		
 		btnStart.doClick();
 	}
 	
