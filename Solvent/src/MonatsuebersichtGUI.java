@@ -39,6 +39,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	private JPanel contentPane;
 	private Sparziel sparziel;
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -83,11 +84,11 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnEinnahmen.setBackground(Color.GRAY);
 		menuBar.add(btnEinnahmen);
 
-		JButton btnTbersicht = new JButton("T-\u00DCbersicht");
+		JButton btnTbersicht = new JButton("Monatsübersicht");
 		btnTbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnTbersicht);
 
-		JButton btnMonatsbersicht = new JButton("Monats\u00FCbersicht");
+		JButton btnMonatsbersicht = new JButton("Jahresübersicht");
 		btnMonatsbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnMonatsbersicht);
 
@@ -256,8 +257,8 @@ public class MonatsuebersichtGUI extends JFrame {
 				Tabelle.setModel(new DefaultTableModel(
 						
 					new Object[][] {
-						{sparziel.readCSV(0, 0), sparziel.readCSV(0, 1), sparziel.readCSV(0, 2), sparziel.readCSV(0, 3), sparziel.readCSV(0, 4), null},
-						{sparziel.readCSV(1, 0), sparziel.readCSV(1, 1), sparziel.readCSV(1, 2), sparziel.readCSV(1, 3), sparziel.readCSV(1, 4), null},
+						{sparziel.readCSV(0, 0), sparziel.readCSV(0, 1), sparziel.readCSV(0, 2), sparziel.readCSV(0, 3), sparziel.readCSV(0, 4), sparziel.erreicht()},
+						{sparziel.readCSV(1, 0), sparziel.readCSV(1, 1), sparziel.readCSV(1, 2), sparziel.readCSV(1, 3), sparziel.readCSV(1, 4), sparziel.erreicht()},
 						{sparziel.readCSV(2, 0), sparziel.readCSV(2, 1), sparziel.readCSV(2, 2), sparziel.readCSV(2, 3), sparziel.readCSV(2, 4), null},
 						{sparziel.readCSV(3, 0), sparziel.readCSV(3, 1), sparziel.readCSV(3, 2), sparziel.readCSV(3, 3), sparziel.readCSV(3, 4), null},
 						{sparziel.readCSV(4, 0), sparziel.readCSV(4, 1), sparziel.readCSV(4, 2), sparziel.readCSV(4, 3), sparziel.readCSV(4, 4), null},
