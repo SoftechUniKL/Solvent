@@ -224,7 +224,7 @@ public Sparziel () {
 
 
 public String readCSV(int r, int c) {
-	String[][] erg = new String[5][5];
+	String[][] erg = new String[5][6];
     try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
         String zeile="";
