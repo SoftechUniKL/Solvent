@@ -43,9 +43,9 @@ public class Sparziel extends JFrame {
 	private JTextField textField_bezeichnung;
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
 	
-public static void main(String[] args){
-	readCSV();
-}
+
+	
+	
 	
 	//Nennt das Fenster "Neue Buchung" und fügt Buttons und Eingabefelder hinzu
 public Sparziel () {
@@ -111,11 +111,11 @@ public Sparziel () {
                 		 * Informationen in der entsprechenden CSV Datei gespeichert, andernfalls wird eine Felhermeldung ausgegeben
                 		 */
                 		if (rdbtnSparziel.isSelected()){
-            				speichern("sparziel");
+            				speichern("Sparziel");
             				dispose();
             				}
             			else if (rdbtnSchulden.isSelected()){
-            				speichern("schuld");
+            				speichern("Schuld");
             				dispose();
             				}
             			else {
@@ -145,11 +145,12 @@ public Sparziel () {
         			fw = new FileWriter("data/sparen.csv",true);
         			String a = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
         			Date date = java.util.Calendar.getInstance().getTime();
-        			SimpleDateFormat dateFormatter = 
-        			          new SimpleDateFormat("dd/MM/yyyy");
+        			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         			String dateToday = dateFormatter.format(date);
         			BufferedWriter bw = new BufferedWriter(fw);
-        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ ";";
+        			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        			String uhrzeit = sdf.format(new Date());
+        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ "," + uhrzeit+  "\n";
         			bw.write(test);
         			bw.close();
         			} 
@@ -157,10 +158,7 @@ public Sparziel () {
         			System.out.println("Daten konnten nicht gespeichert werden!");
         			e.printStackTrace();
         			}
-            } 
-            
-            	
-            
+            }      
             }
         );
 		       
@@ -225,33 +223,38 @@ public Sparziel () {
 
 
 
-
-public static void readCSV(
-		) {
+public String readCSV(int r, int c) {
+	String[][] erg = new String[5][5];
     try {
-        java.io.BufferedReader FileReader=new java.io.BufferedReader(
-                    new java.io.FileReader(new java.io.File("data/sparen.csv")
-                    )
-                );
-      
+        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
         String zeile="";
-       
+        int i = 0;
         while(null!=(zeile=FileReader.readLine())){         
-            String[] split=zeile.split(";");                
-            System.out.println(split[0]);                  
+            String[] split=zeile.split(",");
+            for(int j = 0; j<split.length;j++){
+            	erg[i][j] = split[j];
+            	}
+            i++;
         }
-       
+        FileReader.close();
+        return erg[r][c];
     } catch (Exception e) {
         e.printStackTrace();
+        System.out.println("Daten können nicht aufgerufen werden");
     }
+    return null;
+}
+	
+public int erreicht(){
+for(int i = 0; i < 5; i++){
+    if (readCSV(i,1) == "Schuld"){
+    System.out.println("Treffer");
+		
+	}
+}
+int i =0;
+return i;
 }
 
 
-
-
-
-
-
-
-	
 }
