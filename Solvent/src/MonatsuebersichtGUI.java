@@ -27,13 +27,17 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import Solvent.Monatsuebersicht;
+
 import com.opencsv.CSVReader;
+
 //github.com/SoftechUniKL/Solvent
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
+
 //github.com/SoftechUniKL/Solvent
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
@@ -226,12 +230,21 @@ public class MonatsuebersichtGUI extends JFrame {
 				table.setVisible(true);
 				table.setBackground(Color.BLUE);
 				table.setModel(new DefaultTableModel(new Object[][] {
-						{ "Monat", "Saldo" }, { null, null }, { null, null },
-						{ null, null }, { null, null }, { null, null },
-						{ null, null }, { null, null }, { null, null },
-						{ null, null }, { null, null }, { null, null },
-						{ null, null }, { null, null }, }, new String[] {
-						"New column", "New column" }));
+						{ "Monat", "Saldo" }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() },
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() },
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() },
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() },
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, 
+						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, }, 
+						new String[] {	"New column", "New column" }));
 				contentPane.add(table, BorderLayout.WEST);
 
 				// Graphische Darstellung
