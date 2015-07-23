@@ -47,6 +47,8 @@ public class Jahresuebersicht extends JFrame {
 	private JTextField textField_1;
 	private JTable table;
 	
+	
+	
 	public Jahresuebersicht()	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 594, 383);
@@ -150,9 +152,13 @@ public class Jahresuebersicht extends JFrame {
 		}
 	}
 		final String[][] einnahmen = new String[lines.size()][];
+		final String[][] DatumEinnahmen = new String[lines.size()][];
 	    int cnt = 0;
 	    for (final String line : lines) {
 	        einnahmen[cnt++] = line.split(",");
+	    }
+	    for (final String line : lines) {
+	        DatumEinnahmen[cnt++] = line.split("/");
 	    }
 	 
 	    // Ausgabe des Array
@@ -185,9 +191,13 @@ public class Jahresuebersicht extends JFrame {
 		}
 	}
 		final String[][] ausgaben = new String[lines.size()][];
+		final String[][] DatumAusgaben = new String[lines.size()][];
 	    int cnt = 0;
 	    for (final String line : lines) {
 	        ausgaben[cnt++] = line.split(",");
+	    }
+	    for (final String line : lines) {
+	        DatumAusgaben[cnt++] = line.split("/");
 	    }
 	 
 	    // Ausgabe des Array
