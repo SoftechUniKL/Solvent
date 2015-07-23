@@ -1,4 +1,10 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+//github.com/SoftechUniKL/Solvent
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+//github.com/SoftechUniKL/Solvent
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -17,9 +25,15 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+//github.com/SoftechUniKL/Solvent
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,25 +41,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import Solvent.Monatsuebersicht;
-
 import com.opencsv.CSVReader;
-
-//github.com/SoftechUniKL/Solvent
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-//github.com/SoftechUniKL/Solvent
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-//github.com/SoftechUniKL/Solvent
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 public class MonatsuebersichtGUI extends JFrame {
 	
@@ -225,7 +221,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				
 				System.out.println("Ich funktioniere!");
 				// Tabelle mit einer Monats�bersicht
-				JTable table;
+			/*	JTable table;
 				table = new JTable();
 				table.setVisible(true);
 				table.setBackground(Color.BLUE);
@@ -246,7 +242,7 @@ public class MonatsuebersichtGUI extends JFrame {
 						{ Monatsuebersicht.Saldo(), Monatsuebersicht.Saldo() }, }, 
 						new String[] {	"New column", "New column" }));
 				contentPane.add(table, BorderLayout.WEST);
-
+*/
 				// Graphische Darstellung
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 				JFreeChart chart = ChartFactory.createLineChart("�bersicht","Monat", "Ausgaben", dataset);
@@ -477,7 +473,9 @@ public class MonatsuebersichtGUI extends JFrame {
 			CSVReader reader = new CSVReader(new FileReader(filename));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
-				DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN); //Erzeugen eines Parse Objekts
+				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				
+				//DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN); //Erzeugen eines Parse Objekts
 				Date datum = df.parse(nextLine[0]); //Einlesen Datum und Parsing als Datum
 				String bezeichnung = nextLine[1]; //Einlesen der Bezeichnung
 				double betrag = Double.parseDouble(nextLine[2]); //Einlesen des Betrags

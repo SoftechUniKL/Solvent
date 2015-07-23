@@ -131,7 +131,7 @@ public class Monatsuebersicht extends JFrame {
 		try	{
 			java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/einnahmen.csv")));
 			String zeile = "";
-			//String für neue Zeile im Array
+			//String fï¿½r neue Zeile im Array
 			
 			int i = 0;
 			while((zeile = FileReader.readLine())!=null)	{
@@ -154,12 +154,14 @@ public class Monatsuebersicht extends JFrame {
 			return einnahmen[r][c];
 		} catch (Exception e)	{
 			e.printStackTrace();
-			System.out.println("Daten können nicht aufgerufen werden.");
+			System.out.println("Daten kï¿½nnen nicht aufgerufen werden.");
 		}
 		
 		return null;
 		
 	}
+	
+	//commit kommentar!
 /*	public String readCSVAusgaben(int r, int c)	{
 		String [][] ausgaben = new String [12][4];
 		try	{
@@ -178,7 +180,7 @@ public class Monatsuebersicht extends JFrame {
 			return ausgaben[r][c];
 		} catch (Exception e)	{
 			e.printStackTrace();
-			System.out.println("Ausgaben können nicht aufgerufen werden.");
+			System.out.println("Ausgaben kï¿½nnen nicht aufgerufen werden.");
 		}
 		return null;
 		
