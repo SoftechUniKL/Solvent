@@ -138,17 +138,17 @@ public class Jahresuebersicht extends JFrame {
 			buff = new BufferedReader(myFile);
 			String line;
 			while ((line = buff.readLine()) != null)	{
-				System.out.println(line);
+//				System.out.println(line);
 				lines.add(line);
 			}
 		} catch(IOException e)	{
-			System.err.println("Error2: " + e );
+			System.err.println("Fehler: " + e );
 		} finally	{
 			 try {
 		            buff.close();
 		            myFile.close();
 			 } catch (IOException e) {
-		            System.err.println("Error2 :" + e);
+		            System.err.println("Fehler: " + e);
 		}
 	}
 		final String[][] einnahmen = new String[lines.size()][];
@@ -162,9 +162,9 @@ public class Jahresuebersicht extends JFrame {
 	    }
 	 
 	    // Ausgabe des Array
-//	    for (String[] arr : einnahmen) {
-//	        System.out.println(Arrays.toString(arr));
-//	    }
+	    for (String[] arrEinnahmen : einnahmen) {
+//	        System.out.println(Arrays.toString(arrEinnahmen));
+	    }
 		return null;
 }
 	public String readCSVAusgaben(int r, int c)	{
@@ -177,17 +177,17 @@ public class Jahresuebersicht extends JFrame {
 			buff = new BufferedReader(myFile);
 			String line;
 			while ((line = buff.readLine()) != null)	{
-				System.out.println(line);
+//				System.out.println(line);
 				lines.add(line);
 			}
 		} catch(IOException e)	{
-			System.err.println("Error2: " + e );
+			System.err.println("Fehler: " + e );
 		} finally	{
 			 try {
 		            buff.close();
 		            myFile.close();
 			 } catch (IOException e) {
-		            System.err.println("Error2 :" + e);
+		            System.err.println("Fehler: " + e);
 		}
 	}
 		final String[][] ausgaben = new String[lines.size()][];
@@ -201,10 +201,32 @@ public class Jahresuebersicht extends JFrame {
 	    }
 	 
 	    // Ausgabe des Array
-//	    for (String[] arr : ausgaben) {
-//	        System.out.println(Arrays.toString(arr));
-//	    }
+	    for (String[] arrAusgaben : ausgaben) {
+//	        System.out.println(Arrays.toString(arrAusgaben));
+/*	    	ArrayList<Long> ausgabeninLong = new ArrayList<Long>(arrAusgaben.length);
+	    	for(int j=0;j<arrAusgaben.length; j++)	{
+	    		ausgabeninLong.add(arrAusgaben.length.get(j).longValue());
+	    	}
+*/	    	
+	    }
 		return null;
 	}
+	
+
+/*	private ArrayList<Integer> convertToInteger(ArrayList<String> stringArray) {
+        ArrayList<Integer> ergebnisInInt = new ArrayList<Integer>();
+        for(String stringValue : stringArray) {
+            try {
+                //Umwandelung von String zu Integer und Speicherung in einer Arraylist aus Integern
+                ergebnisInInt.add(Integer.parseInt(stringValue));
+            } catch(NumberFormatException e) {
+               System.out.println("Fehler: " + e);
+            } 
+        }       
+        return ergebnisInInt;
+    }*/
+//	public static void main(String[]args)	{
+//		
+//	}
 }
 		
