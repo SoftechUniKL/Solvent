@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
@@ -13,19 +15,24 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 
 import java.text.DecimalFormat;
-
-
 import java.awt.event.*;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import com.opencsv.CSVParser;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar; 
+import java.util.StringTokenizer;
 
 
 public class Sparziel extends JFrame {
@@ -33,12 +40,15 @@ public class Sparziel extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField_bezeichnung;
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
-
 	
-	//Nennt das Fenster "Neue Buchung" und fï¿½gt Buttons und Eingabefelder hinzu
+
+	public static void main(String[] args) {
+	 erreicht();
+	}	
+	
+	
+	//Nennt das Fenster "Neue Buchung" und fügt Buttons und Eingabefelder hinzu
 public Sparziel () {
-		
-		
 		
 		setTitle("Neues Ziel setzen");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -61,12 +71,12 @@ public Sparziel () {
 		JRadioButton rdbtnSparziel = new JRadioButton("Sparziel");	
 		JRadioButton rdbtnSchulden = new JRadioButton("Schulden");
 		
-		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewï¿½hlt werden kann 
+		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewählt werden kann 
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnSchulden);
 		bg.add(rdbtnSparziel);
 		
-		//Kreiert den Button "Fertig" und die Spinner fï¿½r das Datum
+		//Kreiert den Button "Fertig" und die Spinner für das Datum
 		JButton btnFertig = new JButton("Fertig");
 		
 		long now = (new Date()).getTime();
@@ -85,8 +95,6 @@ public Sparziel () {
         		    f.setSize( 250, 100 );
         		    f.getContentPane().add( new JLabel( "Bitte geben Sie eine Bezeichnung an!") );
         		    f.setVisible( true );
-        		    
-        		    
         		}
         		else if (textField_betrag.getText().equals("")) {
         			JFrame f = new JFrame( "Achtung" );
@@ -94,29 +102,41 @@ public Sparziel () {
         		    f.setSize( 250, 100 );
         		    f.getContentPane().add( new JLabel( "Bitte geben Sie einen Betrag an!") );
         		    f.setVisible( true );
-        		    
         		}
-            	
-
-            	
         		else {
-        			if (rdbtnSparziel.isSelected()){
-        				speichern("sparziel");
-        				dispose();
-        				}
-        			else if (rdbtnSchulden.isSelected()){
-        				speichern("schuld");
-        				dispose();
-        				}
-        			else {
+        			try {
+                		Double.parseDouble(textField_betrag.getText());
+                		/**
+                		 * Wenn einer der beiden Buttons "Einnahme" oder "Ausgabe" angeklickt wurde, werden die eingegebenen 
+                		 * Informationen in der entsprechenden CSV Datei gespeichert, andernfalls wird eine Felhermeldung ausgegeben
+                		 */
+                		if (rdbtnSparziel.isSelected()){
+            				speichern("Sparziel");
+            				dispose();
+            				}
+            			else if (rdbtnSchulden.isSelected()){
+            				speichern("Schuld");
+            				dispose();
+            				}
+            			else {
+            				JFrame f = new JFrame( "Achtung" );
+                		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
+                		    f.setSize(470, 100);
+                		    f.getContentPane().add( new JLabel( "Bitte wählen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
+                		    f.setVisible( true );
+            		}
+                		} 
+        			/**
+        			 * Handelt es sich, bei dem für den Betrag eingegebenen Wert, nicht um eine Zahl, wird eine Fehlermeldung ausgegeben
+        			 */
+        			catch (NumberFormatException ex) {
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
             		    f.setSize(470, 100);
-            		    f.getContentPane().add( new JLabel( "Bitte wï¿½hlen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
+            		    f.add( new JLabel( "Bitte geben sie für den Betrag eine Zahl ein") );
             		    f.setVisible( true );
+                		}
         		}
-        		}
-        			
             }
             	 
             public void speichern(String n) {
@@ -124,8 +144,13 @@ public Sparziel () {
         		try {
         			fw = new FileWriter("data/sparen.csv",true);
         			String a = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
+        			Date date = java.util.Calendar.getInstance().getTime();
+        			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        			String dateToday = dateFormatter.format(date);
         			BufferedWriter bw = new BufferedWriter(fw);
-        			String test = a + ", " + textField_bezeichnung.getText() + ", " + textField_betrag.getText()+", "+n+ "\n";
+        			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        			String uhrzeit = sdf.format(new Date());
+        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ "," + uhrzeit+  "\n";
         			bw.write(test);
         			bw.close();
         			} 
@@ -133,10 +158,7 @@ public Sparziel () {
         			System.out.println("Daten konnten nicht gespeichert werden!");
         			e.printStackTrace();
         			}
-            } 
-            
-            	
-            
+            }      
             }
         );
 		       
@@ -201,8 +223,7 @@ public Sparziel () {
 
 
 
-
-public String readCSV(int r, int c) {
+public static String readCSV(int r, int c) {
 	String[][] erg = new String[5][6];
     try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
@@ -219,22 +240,49 @@ public String readCSV(int r, int c) {
         return erg[r][c];
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Daten kï¿½nnen nicht aufgerufen werden");
+        System.out.println("Daten können nicht aufgerufen werden");
     }
     return null;
 }
 	
-public int erreicht(){
-for(int i = 0; i < 5; i++){
-    if (readCSV(i,1) == "Schuld"){
-    System.out.println("Treffer");
+
+	
+public static String erreicht(int kategorie){
+	double einnahmen = 19000;
+	try {
+		double gesamtsparziele = 0;
+		double gesamtschulden = 0;
+		for(int i = 0; i <5; i++){
+			if(readCSV(i,4) != null){
+				gesamtsparziele = gesamtsparziele + Double.parseDouble((readCSV(i,4)));
+			}
+		}
+		for(int i = 0; i<5; i++){
+			if (readCSV(i,1) == "Schulden"){
+				gesamtschulden = gesamtschulden + Double.parseDouble((readCSV(i,4)));
+			}
+		}
+		if (readCSV(kategorie, 1) == "Schulden"){
+			double schuldenausgabe = 0;
+			for (int i=0; i<5; i++){
+				schuldenausgabe = schuldenausgabe + einnahmen - Double.parseDouble((readCSV(i,4)));
+				if (kategorie == i){
+					schuldenausgabe = einnahmen - Double.parseDouble((readCSV(i,4)));
+					return String.valueOf(schuldenausgabe);
+				}
+			}
 		
-	}
+		}
+	}catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Daten können nicht aufgerufen werden");
+    }
+    return null;
+	
 }
-int i =0;
-return i;
+	
 }
+	
 
 
 
-}

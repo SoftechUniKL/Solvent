@@ -153,7 +153,7 @@ import java.util.Calendar;
     		}
     		else  {
     			try {
-            		Integer.parseInt(textField_betrag.getText());
+            		Double.parseDouble(textField_betrag.getText());
             		/**
             		 * Wenn einer der beiden Buttons "Einnahme" oder "Ausgabe" angeklickt wurde, werden die eingegebenen 
             		 * Informationen in der entsprechenden CSV Datei gespeichert, andernfalls wird eine Felhermeldung ausgegeben
@@ -195,9 +195,11 @@ import java.util.Calendar;
     		FileWriter fw;
     		try {
     			fw = new FileWriter("data/"+n+".csv",true);
-    			String a = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
+    			String datenow = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
+    			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    			String uhrzeit = sdf.format(new Date());
     			BufferedWriter bw = new BufferedWriter(fw);
-    			String test = a + ", " + textField_bezeichnung.getText() + ", " + textField_betrag.getText()+ "\n";
+    			String test = datenow + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ ","+ uhrzeit +"\n";
     			bw.write(test);
     			bw.close();
     			} 
