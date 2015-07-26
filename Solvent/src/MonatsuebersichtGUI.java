@@ -390,11 +390,11 @@ public class MonatsuebersichtGUI extends JFrame {
 				Tabelle.setModel(new DefaultTableModel(
 						
 					new Object[][] {
-						{sparziel.readCSV(0, 0), sparziel.readCSV(0, 1), sparziel.readCSV(0, 2), sparziel.readCSV(0, 3), sparziel.readCSV(0, 4), null},
-						{sparziel.readCSV(1, 0), sparziel.readCSV(1, 1), sparziel.readCSV(1, 2), sparziel.readCSV(1, 3), sparziel.readCSV(1, 4), null},
-						{sparziel.readCSV(2, 0), sparziel.readCSV(2, 1), sparziel.readCSV(2, 2), sparziel.readCSV(2, 3), sparziel.readCSV(2, 4), null},
-						{sparziel.readCSV(3, 0), sparziel.readCSV(3, 1), sparziel.readCSV(3, 2), sparziel.readCSV(3, 3), sparziel.readCSV(3, 4), null},
-						{sparziel.readCSV(4, 0), sparziel.readCSV(4, 1), sparziel.readCSV(4, 2), sparziel.readCSV(4, 3), sparziel.readCSV(4, 4), null},
+						{Sparziel.readCSV(0, 0), Sparziel.readCSV(0, 1), Sparziel.readCSV(0, 2), Sparziel.readCSV(0, 3), Sparziel.readCSV(0, 4), Sparziel.erreicht(0)},
+						{Sparziel.readCSV(1, 0), Sparziel.readCSV(1, 1), Sparziel.readCSV(1, 2), Sparziel.readCSV(1, 3), Sparziel.readCSV(1, 4), Sparziel.erreicht(1)},
+						{Sparziel.readCSV(2, 0), Sparziel.readCSV(2, 1), Sparziel.readCSV(2, 2), Sparziel.readCSV(2, 3), Sparziel.readCSV(2, 4), Sparziel.erreicht(2)},
+						{Sparziel.readCSV(3, 0), Sparziel.readCSV(3, 1), Sparziel.readCSV(3, 2), Sparziel.readCSV(3, 3), Sparziel.readCSV(3, 4), Sparziel.erreicht(3)},
+						{Sparziel.readCSV(4, 0), Sparziel.readCSV(4, 1), Sparziel.readCSV(4, 2), Sparziel.readCSV(4, 3), Sparziel.readCSV(4, 4), Sparziel.erreicht(4)},
 					},
 					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
 				));
