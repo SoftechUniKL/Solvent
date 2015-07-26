@@ -2,18 +2,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 //github.com/SoftechUniKL/Solvent
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 //github.com/SoftechUniKL/Solvent
 import javax.swing.BorderFactory;
@@ -259,7 +258,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Ausgaben");
 			
 				
 				JScrollPane scrollPane = new JScrollPane();
@@ -293,27 +292,18 @@ public class MonatsuebersichtGUI extends JFrame {
 				pd.setValue(p.getBezeichnung(), p.getBetrag());
 			}
 			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
-			ChartPanel panel = new ChartPanel(pie);
-
+			ChartPanel piepanel = new ChartPanel(pie);
+			
 	
 			// Elemente dem Fenster hinzufuegen:
 			//getContentPane().add(scrollpane);
 			//getContentPane().add(panel);
-			// Berechnet Layout mit geringstem Platzbedarf
-			//pack();
-			GroupLayout gl_contentPane = new GroupLayout(contentPane);
-			gl_contentPane.setHorizontalGroup(
-				gl_contentPane.createParallelGroup()
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblUebersicht)
-					.addGroup(gl_contentPane.createParallelGroup())
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING))
-							.addComponent(scrollpane))
-							.addComponent(panel)
-
-						.addContainerGap(39, Short.MAX_VALUE))
-			);
+			
+			
+			getContentPane().add(lblUebersicht).setLocation(200, 0);		
+			getContentPane().add(scrollpane).setPreferredSize(new Dimension(300, 500));
+			getContentPane().add(piepanel).setPreferredSize(new Dimension(500, 500));
+			pack();
 		}
 
 			});
@@ -325,23 +315,19 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
-			
+				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Einnahmen");
 				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setViewportBorder(null);
-				scrollPane.setBorder(null);
-				     
+			
 				
 				
 		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 				
 				
-				ArrayList<Posten> ausgaben = CSVReader("data/einnahmen.csv");
+				ArrayList<Posten> einnahmen = CSVReader("data/einnahmen.csv");
 				
-				Object[][] data = new Object[ausgaben.size()][3];
+				Object[][] data = new Object[einnahmen.size()][3];
 				int i = 0;
-				for (Posten p : ausgaben) {
+				for (Posten p : einnahmen) {
 					data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
 							.format(p.getDatum());
 					data[i][1] = p.getBezeichnung();
@@ -355,31 +341,24 @@ public class MonatsuebersichtGUI extends JFrame {
 
 			// Kreisdiagramm
 			DefaultPieDataset pd = new DefaultPieDataset();
-			for (Posten p : ausgaben) {
+			for (Posten p : einnahmen) {
 				pd.setValue(p.getBezeichnung(), p.getBetrag());
 			}
-			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
-			ChartPanel panel = new ChartPanel(pie);
+			JFreeChart pie = ChartFactory.createPieChart("Einnahmen", pd);
+			ChartPanel piepanel = new ChartPanel(pie);
 
 	
 			// Elemente dem Fenster hinzufuegen:
-			//getContentPane().add(scrollpane);
-			//getContentPane().add(panel);
-			// Berechnet Layout mit geringstem Platzbedarf
-			//pack();
-			GroupLayout gl_contentPane = new GroupLayout(contentPane);
-			gl_contentPane.setHorizontalGroup(
-				gl_contentPane.createParallelGroup()
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblUebersicht)
-					.addGroup(gl_contentPane.createParallelGroup())
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING))
-							.addComponent(scrollpane))
-							.addComponent(panel)
-
-						.addContainerGap(39, Short.MAX_VALUE))
-			);
+			getContentPane().add(lblUebersicht);		
+			lblUebersicht.setVerticalAlignment(SwingConstants.TOP);
+			
+			getContentPane().add(scrollpane).setPreferredSize(new Dimension(300, 500));
+		
+			getContentPane().add(piepanel).setPreferredSize(new Dimension(500, 500));
+			
+			pack();
+	
+			
 		}
 
 			});
