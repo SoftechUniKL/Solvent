@@ -296,8 +296,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			
 	
 			// Elemente dem Fenster hinzufuegen:
-			//getContentPane().add(scrollpane);
-			//getContentPane().add(panel);
+			
 			
 			
 			getContentPane().add(lblUebersicht).setLocation(200, 0);		
@@ -349,7 +348,9 @@ public class MonatsuebersichtGUI extends JFrame {
 
 	
 			// Elemente dem Fenster hinzufuegen:
+			
 			getContentPane().add(lblUebersicht);		
+			
 			lblUebersicht.setVerticalAlignment(SwingConstants.TOP);
 			
 			getContentPane().add(scrollpane).setPreferredSize(new Dimension(300, 500));
