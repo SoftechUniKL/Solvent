@@ -423,7 +423,6 @@ public class MonatsuebersichtGUI extends JFrame {
 
 				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
-
 				
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setEnabled(false);
@@ -513,45 +512,16 @@ public class MonatsuebersichtGUI extends JFrame {
 				ausgaben.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray Hinzufügen
 			}
 			reader.close();
-
 		} catch (FileNotFoundException e) {
-			System.err
-					.println("Die Datei data/budget.csv wurde nicht gefunden!");
+			System.err.println("Die Datei data/budget.csv wurde nicht gefunden!");
 			System.exit(1);
 		} catch (IOException e) {
-			System.err
-					.println("Probleme beim Oeffnen der Datei data/budget.csv!");
+			System.err.println("Probleme beim Oeffnen der Datei data/budget.csv!");
 			System.exit(1);
 		} catch (ParseException e) {
-			System.err
-					.println("Formatfehler: Die Datei konnte nicht eingelesen werden!");
+			System.err.println("Formatfehler: Die Datei konnte nicht eingelesen werden!");
 			System.exit(1);
 		}
 	return ausgaben;
 	}
-
-	/*class MyTableModel extends AbstractTableModel{
-		public boolean isCellEditable(){
-				return false;
-		}
-
-		@Override
-		public int getColumnCount() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public int getRowCount() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-	}*/
 }
