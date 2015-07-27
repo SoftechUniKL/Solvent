@@ -513,13 +513,13 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Die Datei data/budget.csv wurde nicht gefunden!");
+			System.err.println("Die Datei wurde nicht gefunden!");
 			System.exit(1);
 		} catch (IOException e) {
-			System.err.println("Probleme beim Oeffnen der Datei data/budget.csv!");
+			System.err.println("Probleme beim Oeffnen der Datei!");
 			System.exit(1);
 		} catch (ParseException e) {
-			System.err.println("Formatfehler: Die Datei konnte nicht eingelesen werden!");
+			System.err.println("Die Datei konnte nicht eingelesen werden!");
 			System.exit(1);
 		}
 	return ausgaben;
