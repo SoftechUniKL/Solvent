@@ -318,9 +318,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				setContentPane(contentPane);
 				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Einnahmen");
 				
-			
-				
-				
 		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 				
 				
@@ -336,10 +333,11 @@ public class MonatsuebersichtGUI extends JFrame {
 					i++;
 				}
 				
-			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung",
-				"Betrag" });
+			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
 			JScrollPane scrollpane = new JScrollPane(table);
 			scrollpane.setBorder(BorderFactory.createEmptyBorder());
+			table.setPreferredSize(new Dimension(300,500));;
+			
 
 			// Kreisdiagramm
 			DefaultPieDataset pd = new DefaultPieDataset();
@@ -348,22 +346,43 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 			JFreeChart pie = ChartFactory.createPieChart("Einnahmen", pd);
 			ChartPanel piepanel = new ChartPanel(pie);
+			piepanel.setPreferredSize(new Dimension(500,500));
 
 	
 			// Elemente dem Fenster hinzufuegen:
 			
-			getContentPane().add(lblUebersicht);		
-			
-			lblUebersicht.setVerticalAlignment(SwingConstants.TOP);
-			
-			getContentPane().add(scrollpane).setPreferredSize(new Dimension(300, 500));
-		
-			getContentPane().add(piepanel).setPreferredSize(new Dimension(500, 500));
-			
-			pack();
+			GroupLayout gl_contentPane = new GroupLayout(contentPane);
+			gl_contentPane.setHorizontalGroup(
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(lblUebersicht, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(696, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(table)
+								.addPreferredGap(ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+								.addComponent(piepanel)
+								.addGap(260))))
+			);
+			gl_contentPane.setVerticalGroup(
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addGap(14)
+						.addComponent(lblUebersicht)
+						.addGap(39)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(table)
+							.addComponent(piepanel))
+						.addGap(218))
+			);
+			contentPane.setLayout(gl_contentPane);
+			contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
+		}
 	
 			
-		}
+		
 
 			});
 		
