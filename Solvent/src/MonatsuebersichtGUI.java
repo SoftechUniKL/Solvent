@@ -30,6 +30,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.AbstractTableModel;
 //github.com/SoftechUniKL/Solvent
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +77,7 @@ public class MonatsuebersichtGUI extends JFrame {
 
 
 		/**
-		 * F�gt der Men�bar Buttons hinzu
+		 * Fuegt der Menuebar Buttons hinzu
 		 */
 		menuBar = new JMenuBar();
 		menuBar.setBackground(Color.GRAY);
@@ -94,11 +95,11 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnEinnahmen.setBackground(Color.GRAY);
 		menuBar.add(btnEinnahmen);
 
-		JButton btnTbersicht = new JButton("Monats�bersicht");
+		JButton btnTbersicht = new JButton("Monatsuebersicht");
 		btnTbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnTbersicht);
 
-		JButton btnMonatsbersicht = new JButton("Jahres�bersicht");
+		JButton btnMonatsbersicht = new JButton("Jahresuebersicht");
 		btnMonatsbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnMonatsbersicht);
 
@@ -116,31 +117,31 @@ public class MonatsuebersichtGUI extends JFrame {
 
 
 		/** 
-		 * Gibt demBenutzer die M�glichkeit hoch bzw runter zu scrollen
+		 * Gibt demBenutzer die Moeglichkeit hoch bzw runter zu scrollen
 		 */
 		JScrollBar scrollBar = new JScrollBar();
 		contentPane.add(scrollBar, BorderLayout.EAST);
 
 		/**
-		 * F�gt dem Button Start eine Aktion beim Klicken hinzu
+		 * Fuegt dem Button Start eine Aktion beim Klicken hinzu
 		 */
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				JLabel lblMonatsbersicht = new JLabel("Monats\u00FCbersicht");
+				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblMonatsbersicht, BorderLayout.NORTH);
 
-				JLabel lblNewLabel = new JLabel("Ihre \u00DCbersicht f\u00FCr diesen Monat");
+				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer diesen Monat");
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
 
-				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzuf�gen");
-				JButton btnHinzufuegen = new JButton("Neue Buchung hinzuf\u00FCgen");
-				JLabel lblHierEinnahmenEinfgen = new JLabel("Hier Einnahmen einf\u00FCgen");
-				JLabel lblHierAusgabenEinfgen = new JLabel("Hier Ausgaben einf\u00FCgen");
+				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
+				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
+				JLabel lblHierEinnahmenEinfgen = new JLabel("Hier Einnahmen einfuegen");
+				JLabel lblHierAusgabenEinfgen = new JLabel("Hier Ausgaben einfuegen");
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
-				JLabel lblRestbudgetEinfgen = new JLabel("Restbudget einf\u00FCgen");
+				JLabel lblRestbudgetEinfgen = new JLabel("Restbudget einfuegen");
 
 	    		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 	    		gl_contentPane.setHorizontalGroup(
@@ -212,14 +213,14 @@ public class MonatsuebersichtGUI extends JFrame {
 		});
 
 		/**
-		 * F�gt dem Button Monats�bersicht eine Aktion beim Klicken hinzu
+		 * Fuegt dem Button Monatsuebersicht eine Aktion beim Klicken hinzu
 		 */
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
 				System.out.println("Ich funktioniere!");
-				// Tabelle mit einer Monats�bersicht
+				// Tabelle mit einer Monatsuebersicht
 			/*	JTable table;
 				table = new JTable();
 				table.setVisible(true);
@@ -244,7 +245,7 @@ public class MonatsuebersichtGUI extends JFrame {
 */
 				// Graphische Darstellung
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-				JFreeChart chart = ChartFactory.createLineChart("�bersicht","Monat", "Ausgaben", dataset);
+				JFreeChart chart = ChartFactory.createLineChart("uebersicht","Monat", "Ausgaben", dataset);
 				ChartPanel chartPanel = new ChartPanel(chart);
 				getContentPane().add(chartPanel, BorderLayout.CENTER);
 				chartPanel.setBackground(Color.BLUE);
@@ -258,7 +259,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Ausgaben");
+				JLabel lblUebersicht = new JLabel("Uebersicht ihrer Ausgaben");
 			
 				
 				JScrollPane scrollPane = new JScrollPane();
@@ -339,7 +340,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("\u00DCbersicht ihrer Einnahmen");
+				JLabel lblUebersicht = new JLabel("Uebersicht ihrer Einnahmen");
 				
 		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 				
@@ -411,7 +412,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		
 		
 		/**
-		 * F�gt dem Button Sparen eine Aktion beim Klicken hinzu
+		 * Fuegt dem Button Sparen eine Aktion beim Klicken hinzu
 		 */
 		btnSparen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -420,7 +421,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				setContentPane(contentPane);
 
-				JLabel lblRestbudget = new JLabel("\u00DCbersicht ihrer Schulden und Sparziele");
+				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
 
 				
@@ -432,6 +433,11 @@ public class MonatsuebersichtGUI extends JFrame {
 				
 				JTable Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
+				Tabelle.setEditingColumn(0);
+				//Tabelle.isCellEditable();
+				
+					Tabelle.setEnabled(false);
+				
 				Tabelle.setModel(new DefaultTableModel(
 						
 					new Object[][] {
@@ -523,5 +529,29 @@ public class MonatsuebersichtGUI extends JFrame {
 		}
 	return ausgaben;
 	}
-		
+
+	/*class MyTableModel extends AbstractTableModel{
+		public boolean isCellEditable(){
+				return false;
+		}
+
+		@Override
+		public int getColumnCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public int getRowCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}*/
 }

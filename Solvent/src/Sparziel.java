@@ -263,9 +263,13 @@ public static Double erreicht(int kategorie){
 			return Double.parseDouble(readCSV(kategorie, 4));
 		}
 		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(readCSV(kategorie, 4))){
+			if(einnahmen_minus_schulden_bis_aktuelle_pos < 0){
+				return 0.0;
+			}
+			else{
 			return einnahmen_minus_schulden_bis_aktuelle_pos;
+			}
 		}
-		return 1.0;
 	}
 	else if (readCSV(kategorie,1).equals("Sparziel")){
 		for(int i = 0; i<5; i++){
@@ -283,20 +287,20 @@ public static Double erreicht(int kategorie){
 			return Double.parseDouble(readCSV(kategorie,4));
 		}
 		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(readCSV(kategorie, 4))){
-			return einnahmen_minus_schulden_und_sz_bis_akt_pos;
+			if(einnahmen_minus_schulden_und_sz_bis_akt_pos < 0){
+				return 0.0;
+			}
+			else{
+					return einnahmen_minus_schulden_und_sz_bis_akt_pos;
+			}
 		}
-		return 2.0;
-		
-	}
-	else {
-		return 3.0;
 		
 	}
 	}catch (Exception e) {
         e.printStackTrace();
         System.out.println("Fehler beim Verarbeiten der Daten!");
     }
-	return 4.0;
+	return 1.0;
 }
 	
 }
