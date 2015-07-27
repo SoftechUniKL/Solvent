@@ -41,9 +41,6 @@ public class Sparziel extends JFrame {
 	private JTextField textField_bezeichnung;
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
 	
-
-	
-	
 	//Nennt das Fenster "Neue Buchung" und f�gt Buttons und Eingabefelder hinzu
 public Sparziel () {
 		
@@ -244,25 +241,26 @@ public static String readCSV(int r, int c) {
 	
 
 	
-public static Double erreicht(int kategorie){
-	double einnahmen = 1000;
+public static Double erreicht(int zeile){
+	double einnahmen = 10;
 	double alle_schulden_bis_aktuelle_position =0;
 	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
 	double gesamtschulden = 0;
 	double alle_sparziele_bis_aktuelle_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
+	
 	try {
-	if (readCSV(kategorie,1).equals("Schuld")){
-		for(int i = 0; i < kategorie; i++){
-			if(readCSV(i,1).equals("Schuld")){
+	if (readCSV(zeile,1).equals("Schuld")){
+		for(int i = 0; i < zeile; i++){
+			if(readCSV(i,1).equals("Schuld") && readCSV(i,1).equals(null) != false){
 				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(readCSV(i,4));
 			}
 		}
 		einnahmen_minus_schulden_bis_aktuelle_pos = einnahmen - alle_schulden_bis_aktuelle_position;
-		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(readCSV(kategorie, 4))){
-			return Double.parseDouble(readCSV(kategorie, 4));
+		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(readCSV(zeile, 4))){
+			return Double.parseDouble(readCSV(zeile, 4));
 		}
-		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(readCSV(kategorie, 4))){
+		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(readCSV(zeile, 4))){
 			if(einnahmen_minus_schulden_bis_aktuelle_pos < 0){
 				return 0.0;
 			}
@@ -271,22 +269,25 @@ public static Double erreicht(int kategorie){
 			}
 		}
 	}
-	else if (readCSV(kategorie,1).equals("Sparziel")){
+	else if (readCSV(zeile,1).equals("Sparziel")){
 		for(int i = 0; i<5; i++){
 			if (readCSV(i,1).equals("Schuld")){
 				gesamtschulden = gesamtschulden + Double.parseDouble((readCSV(i,4)));
 			}
+			else if (readCSV(i,1).equals("")){
+				return null;
+			}
 		}
-		for(int i = 0; i < kategorie; i++){
+		for(int i = 0; i < zeile; i++){
 			if(readCSV(i,1).equals("Sparziel")){
 				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(readCSV(i,4));
 			}
 		}
 		einnahmen_minus_schulden_und_sz_bis_akt_pos = einnahmen - gesamtschulden - alle_sparziele_bis_aktuelle_pos;
-		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(readCSV(kategorie, 4))){
-			return Double.parseDouble(readCSV(kategorie,4));
+		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(readCSV(zeile, 4))){
+			return Double.parseDouble(readCSV(zeile,4));
 		}
-		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(readCSV(kategorie, 4))){
+		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(readCSV(zeile, 4))){
 			if(einnahmen_minus_schulden_und_sz_bis_akt_pos < 0){
 				return 0.0;
 			}
@@ -295,6 +296,9 @@ public static Double erreicht(int kategorie){
 			}
 		}
 		
+	}
+	else {
+		System.out.println("Eigentlich soll ich funktionieren :(");
 	}
 	}catch (Exception e) {
         e.printStackTrace();
