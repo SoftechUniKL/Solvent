@@ -254,7 +254,7 @@ public static Double erreicht(int kategorie){
 	try {
 	if (readCSV(kategorie,1).equals("Schuld")){
 		for(int i = 0; i < kategorie; i++){
-			if(readCSV(i,1) == "Schuld"){
+			if(readCSV(i,1).equals("Schuld")){
 				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(readCSV(i,4));
 			}
 		}
@@ -269,12 +269,12 @@ public static Double erreicht(int kategorie){
 	}
 	else if (readCSV(kategorie,1).equals("Sparziel")){
 		for(int i = 0; i<5; i++){
-			if (readCSV(i,1) == "Schuld"){
+			if (readCSV(i,1).equals("Schuld")){
 				gesamtschulden = gesamtschulden + Double.parseDouble((readCSV(i,4)));
 			}
 		}
 		for(int i = 0; i < kategorie; i++){
-			if(readCSV(i,1) == "Sparziel"){
+			if(readCSV(i,1).equals("Sparziel")){
 				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(readCSV(i,4));
 			}
 		}
