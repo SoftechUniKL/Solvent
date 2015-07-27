@@ -72,7 +72,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	public MonatsuebersichtGUI() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 700);
+		setBounds(100, 100, 775, 700);
 
 
 		/**
