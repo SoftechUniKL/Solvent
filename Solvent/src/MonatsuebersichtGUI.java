@@ -264,6 +264,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
 				scrollPane.setBorder(null);
+			
 				     
 				
 				
@@ -285,6 +286,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung",
 				"Betrag" });
 			JScrollPane scrollpane = new JScrollPane(table);
+			scrollpane.setBorder(BorderFactory.createEmptyBorder());
 
 			// Kreisdiagramm
 			DefaultPieDataset pd = new DefaultPieDataset();
