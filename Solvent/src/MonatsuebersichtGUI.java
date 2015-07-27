@@ -287,7 +287,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				"Betrag" });
 			JScrollPane scrollpane = new JScrollPane(table);
 			scrollpane.setBorder(BorderFactory.createEmptyBorder());
-
+			table.setPreferredSize(new Dimension(300,500));;
 			// Kreisdiagramm
 			DefaultPieDataset pd = new DefaultPieDataset();
 			for (Posten p : ausgaben) {
@@ -295,17 +295,40 @@ public class MonatsuebersichtGUI extends JFrame {
 			}
 			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
 			ChartPanel piepanel = new ChartPanel(pie);
-			
+			piepanel.setPreferredSize(new Dimension(500,500));
 	
-			// Elemente dem Fenster hinzufuegen:
-			
-			
-			
-			getContentPane().add(lblUebersicht).setLocation(200, 0);		
-			getContentPane().add(scrollpane).setPreferredSize(new Dimension(300, 500));
-			getContentPane().add(piepanel).setPreferredSize(new Dimension(500, 500));
-			pack();
+			GroupLayout gl_contentPane = new GroupLayout(contentPane);
+			gl_contentPane.setHorizontalGroup(
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(lblUebersicht, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(696, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(table)
+								.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+								.addComponent(piepanel)
+								.addGap(20))))
+			);
+			gl_contentPane.setVerticalGroup(
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createSequentialGroup()
+						.addGap(20)
+						.addComponent(lblUebersicht)
+						.addGap(20)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(table)
+							.addComponent(piepanel))
+						.addGap(20))
+			);
+			contentPane.setLayout(gl_contentPane);
+			contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
 		}
+			
+			
+		
 
 			});
 		
