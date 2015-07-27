@@ -362,20 +362,20 @@ public class MonatsuebersichtGUI extends JFrame {
 								.addContainerGap(696, Short.MAX_VALUE))
 							.addGroup(gl_contentPane.createSequentialGroup()
 								.addComponent(table)
-								.addPreferredGap(ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
 								.addComponent(piepanel)
-								.addGap(260))))
+								.addGap(20))))
 			);
 			gl_contentPane.setVerticalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGap(14)
+						.addGap(20)
 						.addComponent(lblUebersicht)
-						.addGap(39)
+						.addGap(20)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 							.addComponent(table)
 							.addComponent(piepanel))
-						.addGap(218))
+						.addGap(20))
 			);
 			contentPane.setLayout(gl_contentPane);
 			contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
