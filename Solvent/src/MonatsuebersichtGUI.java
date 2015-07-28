@@ -30,7 +30,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.AbstractTableModel;
 //github.com/SoftechUniKL/Solvent
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -435,10 +434,9 @@ public class MonatsuebersichtGUI extends JFrame {
 				Tabelle.setEditingColumn(0);
 				//Tabelle.isCellEditable();
 				
-					Tabelle.setEnabled(false);
 				
+					Tabelle.setEnabled(false);
 				Tabelle.setModel(new DefaultTableModel(
-						
 					new Object[][] {
 						{Sparziel.readCSV(0, 0), Sparziel.readCSV(0, 1), Sparziel.readCSV(0, 2), Sparziel.readCSV(0, 3), Sparziel.readCSV(0, 4), Sparziel.erreicht(0)},
 						{Sparziel.readCSV(1, 0), Sparziel.readCSV(1, 1), Sparziel.readCSV(1, 2), Sparziel.readCSV(1, 3), Sparziel.readCSV(1, 4), Sparziel.erreicht(1)},

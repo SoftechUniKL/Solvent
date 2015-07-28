@@ -227,14 +227,16 @@ public static String readCSV(int r, int c) {
             String[] split=zeile.split(",");
             for(int j = 0; j<split.length;j++){
             	erg[i][j] = split[j];
-            	}
-            i++;
+            }
+            if(i < 4){
+            	i++;
+            }    
         }
         FileReader.close();
         return erg[r][c];
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Daten k�nnen nicht aufgerufen werden");
+        System.out.println("Daten koennen nicht aufgerufen werden");
     }
     return null;
 }
@@ -242,8 +244,8 @@ public static String readCSV(int r, int c) {
 
 	
 public static Double erreicht(int zeile){
-	double einnahmen = 10;
-	double alle_schulden_bis_aktuelle_position =0;
+	double einnahmen = 900;
+	double alle_schulden_bis_aktuelle_position = 0;
 	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
 	double gesamtschulden = 0;
 	double alle_sparziele_bis_aktuelle_pos = 0;
@@ -252,7 +254,7 @@ public static Double erreicht(int zeile){
 	try {
 	if (readCSV(zeile,1).equals("Schuld")){
 		for(int i = 0; i < zeile; i++){
-			if(readCSV(i,1).equals("Schuld") && readCSV(i,1).equals(null) != false){
+			if(readCSV(i,1).equals("Schuld")){
 				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(readCSV(i,4));
 			}
 		}
@@ -271,12 +273,10 @@ public static Double erreicht(int zeile){
 	}
 	else if (readCSV(zeile,1).equals("Sparziel")){
 		for(int i = 0; i<5; i++){
-			if (readCSV(i,1).equals("Schuld")){
+			if (readCSV(i,1).equals("Schuld") && !readCSV(i,1).equals(null)){
 				gesamtschulden = gesamtschulden + Double.parseDouble((readCSV(i,4)));
 			}
-			else if (readCSV(i,1).equals("")){
-				return null;
-			}
+			
 		}
 		for(int i = 0; i < zeile; i++){
 			if(readCSV(i,1).equals("Sparziel")){
@@ -292,7 +292,7 @@ public static Double erreicht(int zeile){
 				return 0.0;
 			}
 			else{
-					return einnahmen_minus_schulden_und_sz_bis_akt_pos;
+				return einnahmen_minus_schulden_und_sz_bis_akt_pos;
 			}
 		}
 		
@@ -304,7 +304,8 @@ public static Double erreicht(int zeile){
         e.printStackTrace();
         System.out.println("Fehler beim Verarbeiten der Daten!");
     }
-	return 1.0;
+	return null;
+	
 }
 	
 }
