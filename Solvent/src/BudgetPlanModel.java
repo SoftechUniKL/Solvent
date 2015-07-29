@@ -16,7 +16,7 @@ import com.opencsv.CSVReader;
  * Die Daten werden in der Datei data/budget.csv abgespeichert als CSV-Datei.
  * 
  */
-public class BudgetPlanModel {
+/*public class BudgetPlanModel {
 	List<Posten> ausgaben;
 
 	public BudgetPlanModel() {
@@ -50,4 +50,4 @@ public class BudgetPlanModel {
 			System.exit(1);
 		}
 	}
-}
+}*/

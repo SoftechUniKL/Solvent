@@ -45,7 +45,7 @@ public class BudgetPlanGUI extends JFrame {
 	 * @param budget
 	 *            Modell der Daten
 	 */
-	public BudgetPlanGUI(BudgetPlanModel budget) {
+	/*public BudgetPlanGUI(BudgetPlanModel budget) {
 		super("BudgetPlan");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());
@@ -109,4 +109,4 @@ public class BudgetPlanGUI extends JFrame {
 	}
 
 
-}
+}*/
