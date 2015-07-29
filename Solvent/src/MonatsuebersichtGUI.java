@@ -18,6 +18,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -207,7 +208,7 @@ public class MonatsuebersichtGUI extends JFrame {
 						sparziel = new Sparziel();
 						sparziel.setVisible(true);
 					}
-				});
+				});	
 			}
 		});
 
@@ -217,8 +218,19 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				System.out.println("Ich funktioniere!");
+		/*		JFrame f = new JFrame( "Achtung!!!!!!!!!!! Julia ist Krank, bitte nichtmehr klicken!!!!");
+				ImageIcon icon = new ImageIcon("data//53.jpg");
+				JLabel l1 = new JLabel (icon);
+				JPanel feld = new JPanel();
+				feld.add(l1);
+				feld.setBounds(50, 50, 510, 510);
+    		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
+    		    f.setSize( 800, 800 );
+    		   
+    		   
+    		    f.add(feld);
+    		   f.setVisible( true );   
+					
 				// Tabelle mit einer Monatsuebersicht
 			/*	JTable table;
 				table = new JTable();

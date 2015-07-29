@@ -45,7 +45,7 @@ public class Testerinho {
 				e.printStackTrace();
 			}
 		
-	assertEquals("Der Mainframe wird nicht dargestellt", frame.isVisible(), true);
+	assertEquals("Der Mainframe wird nicht dargestellt", testRun.testvariable, true);
 	
 	}
 	}
