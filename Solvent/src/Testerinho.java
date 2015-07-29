@@ -13,6 +13,8 @@ public class Testerinho {
 	
 	
 	
+
+
 	@Test
 	public void testCSVReader(){
 		try {
@@ -36,16 +38,14 @@ public class Testerinho {
 	
 	@Test
 	public void testRun(){
-		
-			try {
+	
+			
 				MonatsuebersichtGUI frame = new MonatsuebersichtGUI();
 				frame.setVisible(true);
 				boolean testvariable = frame.isVisible();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			
 		
-	assertEquals("Der Mainframe wird nicht dargestellt", testRun.testvariable, true);
+	assertEquals("Der Mainframe wird nicht dargestellt",testvariable, true);
 	
 	}
 	}
