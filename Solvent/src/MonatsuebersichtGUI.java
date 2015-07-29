@@ -18,7 +18,6 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -138,7 +137,10 @@ public class MonatsuebersichtGUI extends JFrame {
 
 				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
 				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
-				JLabel lblHierEinnahmenEinfgen = new JLabel("Hier Einnahmen einfuegen");
+				
+    			
+				JLabel lblHierEinnahmenEinfgen = new JLabel(funktion ("einnahmen"));
+				
 				JLabel lblHierAusgabenEinfgen = new JLabel("Hier Ausgaben einfuegen");
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
 				JLabel lblRestbudgetEinfgen = new JLabel("Restbudget einfuegen");
@@ -276,13 +278,8 @@ public class MonatsuebersichtGUI extends JFrame {
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
 				scrollPane.setBorder(null);
-			
-				     
 				
-				
-		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
-				
-				
+				//Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
 				ArrayList<Posten> ausgaben = CSVReader("data/ausgaben.csv");
 				
 				Object[][] data = new Object[ausgaben.size()][3];
@@ -366,6 +363,7 @@ public class MonatsuebersichtGUI extends JFrame {
 					data[i][1] = p.getBezeichnung();
 					data[i][2] = String.format("%.2f", p.getBetrag());
 					i++;
+				
 				}
 				
 			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
@@ -436,10 +434,9 @@ public class MonatsuebersichtGUI extends JFrame {
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setEnabled(false);
-				scrollPane.setBorder( BorderFactory.createEmptyBorder() );
+				scrollPane.setEnabled(true);
 				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 				
 				JTable Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
@@ -510,11 +507,9 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnStart.doClick();
 	}
 	
-	public ArrayList<Posten> CSVReader(String filename) {
-		ArrayList<Posten> ausgaben = new ArrayList<Posten>(); //Initialisieren der Ausgaben als Array mit Posten
+	public static ArrayList<Posten> CSVReader(String filename) {
+		ArrayList<Posten> file_as_array = new ArrayList<Posten>(); //Initialisieren der Ausgaben als Array mit Posten
 		try {
-			
-		
 			// Zeilenweises Einlesen der Daten
 			CSVReader reader = new CSVReader(new FileReader(filename));
 			String[] nextLine;
@@ -525,7 +520,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				Date datum = df.parse(nextLine[0]); //Einlesen Datum und Parsing als Datum
 				String bezeichnung = nextLine[1]; //Einlesen der Bezeichnung
 				double betrag = Double.parseDouble(nextLine[2]); //Einlesen des Betrags
-				ausgaben.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray Hinzufügen
+				file_as_array.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray Hinzufuegen
 			}
 			reader.close();
 		} catch (FileNotFoundException e) {
@@ -538,6 +533,52 @@ public class MonatsuebersichtGUI extends JFrame {
 			System.err.println("Die Datei konnte nicht eingelesen werden!");
 			System.exit(1);
 		}
-	return ausgaben;
+	return file_as_array;
 	}
-}
+	
+	public static String funktion (String filename){
+		int number_of_rows = 0;
+		Date date = java.util.Calendar.getInstance().getTime();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
+		String dateToday = dateFormatter.format(date);
+		try {
+	        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
+	        String zeile="";
+	        while(null!=(zeile=FileReader.readLine())){         
+	        	number_of_rows++; 
+	        }
+	        FileReader.close();    
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Groesse des Arrays kann nicht festgelegt werden ");
+	    }
+		
+		String[][] file_as_array = new String[number_of_rows][4];
+	    try {
+	        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
+	        String zeile="";
+	        while(null!=(zeile=FileReader.readLine())){         
+	            String[] split=zeile.split(",");
+	            int i = 0;
+	            for(int j = 0; j<split.length;j++){
+	            	file_as_array[i][j] = split[j];
+	            }
+	            	i++;  
+	        }
+	        FileReader.close();
+	        double gesamt = 0.0;
+	        for (int i = 0; i<file_as_array.length; i++ ){
+	        	if (Double.parseDouble(file_as_array[i][0].substring(3,5)) == Double.parseDouble(dateToday)){
+	        		gesamt = gesamt + Double.parseDouble(file_as_array[i][2]);
+	        	}
+	        	System.out.println(gesamt);
+	        }
+	        return String.valueOf(gesamt);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Daten koennen nicht aufgerufen werden");
+	    }
+	    return null;
+	}
+	
+	}
