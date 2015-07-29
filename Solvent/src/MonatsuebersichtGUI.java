@@ -432,20 +432,26 @@ public class MonatsuebersichtGUI extends JFrame {
 				JTable Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
 				Tabelle.setEditingColumn(0);
-				//Tabelle.isCellEditable();
 				
+				String[][] test = Sparziel.readCSV();
+				for(int i = 0; i<test.length;i++){
+					test[i][5] = Sparziel.erreicht(i).toString();
+				}
 				
-					Tabelle.setEnabled(false);
+
+				
+				//Tabelle.setEnabled(false);
+				Tabelle.setRowSelectionAllowed(true);
 				Tabelle.setModel(new DefaultTableModel(
-					new Object[][] {
-						{Sparziel.readCSV(0, 0), Sparziel.readCSV(0, 1), Sparziel.readCSV(0, 2), Sparziel.readCSV(0, 3), Sparziel.readCSV(0, 4), Sparziel.erreicht(0)},
-						{Sparziel.readCSV(1, 0), Sparziel.readCSV(1, 1), Sparziel.readCSV(1, 2), Sparziel.readCSV(1, 3), Sparziel.readCSV(1, 4), Sparziel.erreicht(1)},
-						{Sparziel.readCSV(2, 0), Sparziel.readCSV(2, 1), Sparziel.readCSV(2, 2), Sparziel.readCSV(2, 3), Sparziel.readCSV(2, 4), Sparziel.erreicht(2)},
-						{Sparziel.readCSV(3, 0), Sparziel.readCSV(3, 1), Sparziel.readCSV(3, 2), Sparziel.readCSV(3, 3), Sparziel.readCSV(3, 4), Sparziel.erreicht(3)},
-						{Sparziel.readCSV(4, 0), Sparziel.readCSV(4, 1), Sparziel.readCSV(4, 2), Sparziel.readCSV(4, 3), Sparziel.readCSV(4, 4), Sparziel.erreicht(4)},
-					},
+						test,
 					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
 				));
+				
+				for (int c = 0; c < Tabelle.getColumnCount(); c++)
+				{
+				    Class<?> col_class = Tabelle.getColumnClass(c);
+				    Tabelle.setDefaultEditor(col_class, null);        // remove editor
+				}
 			
 				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 				rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);

@@ -142,9 +142,7 @@ public Sparziel () {
         			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         			String dateToday = dateFormatter.format(date);
         			BufferedWriter bw = new BufferedWriter(fw);
-        			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        			String uhrzeit = sdf.format(new Date());
-        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+ "," + uhrzeit+  "\n";
+        			String test = textField_bezeichnung.getText() + ","+ n + "," +dateToday+ "," + a + "," + Double.parseDouble(textField_betrag.getText())+  "\n";
         			bw.write(test);
         			bw.close();
         			} 
@@ -217,8 +215,24 @@ public Sparziel () {
 
 
 
-public static String readCSV(int r, int c) {
-	String[][] erg = new String[5][6];
+public static String[][] readCSV() {
+	 int number_of_rows = 0;
+	try {
+        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
+        String zeile="";
+        while(null!=(zeile=FileReader.readLine())){         
+        	number_of_rows++; 
+        }
+        FileReader.close();
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Daten koennen nicht aufgerufen werden");
+    }
+	
+	
+	
+	String[][] erg = new String[number_of_rows][6];
     try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
         String zeile="";
@@ -228,12 +242,11 @@ public static String readCSV(int r, int c) {
             for(int j = 0; j<split.length;j++){
             	erg[i][j] = split[j];
             }
-            if(i < 4){
-            	i++;
-            }    
+            	i++;    
         }
         FileReader.close();
-        return erg[r][c];
+        
+        return erg;
     } catch (Exception e) {
         e.printStackTrace();
         System.out.println("Daten koennen nicht aufgerufen werden");
@@ -244,25 +257,32 @@ public static String readCSV(int r, int c) {
 
 	
 public static Double erreicht(int zeile){
-	double einnahmen = 900;
+	
+	System.out.println("erreicht" + zeile + "\n");
+	
+	double einnahmen = 1000000;
 	double alle_schulden_bis_aktuelle_position = 0;
 	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
 	double gesamtschulden = 0;
 	double alle_sparziele_bis_aktuelle_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
-	
+	String[][] t = readCSV();
 	try {
-	if (readCSV(zeile,1).equals("Schuld")){
+		
+		System.out.println(t.length);
+		
+	if (t[zeile][1].equals("Schuld")){
 		for(int i = 0; i < zeile; i++){
-			if(readCSV(i,1).equals("Schuld")){
-				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(readCSV(i,4));
+			if(t[i][1].equals("Schuld")){
+				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(t[i][4]);
+				System.out.println(i + " " + " " + t[i][1] + " " + t[i][4] + "\n");
 			}
 		}
 		einnahmen_minus_schulden_bis_aktuelle_pos = einnahmen - alle_schulden_bis_aktuelle_position;
-		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(readCSV(zeile, 4))){
-			return Double.parseDouble(readCSV(zeile, 4));
+		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(t[zeile][4])){
+			return Double.parseDouble(t[zeile][4]);
 		}
-		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(readCSV(zeile, 4))){
+		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(t[zeile][4])){
 			if(einnahmen_minus_schulden_bis_aktuelle_pos < 0){
 				return 0.0;
 			}
@@ -271,23 +291,25 @@ public static Double erreicht(int zeile){
 			}
 		}
 	}
-	else if (readCSV(zeile,1).equals("Sparziel")){
-		for(int i = 0; i<5; i++){
-			if (readCSV(i,1).equals("Schuld") && !readCSV(i,1).equals(null)){
-				gesamtschulden = gesamtschulden + Double.parseDouble((readCSV(i,4)));
+	else if (t[zeile][1].equals("Sparziel")){
+		for(int i = 0; i<t.length; i++){
+			System.out.println("bla: " + i + " " + t.length);
+			if (t[i][1].equals("Schuld")){
+				gesamtschulden = gesamtschulden + Double.parseDouble((t[i][4]));
+				System.out.println(i + " "  + " " + t[i][1] + " " + t[i][4] + " " + t.length + "\n");
 			}
 			
 		}
 		for(int i = 0; i < zeile; i++){
-			if(readCSV(i,1).equals("Sparziel")){
-				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(readCSV(i,4));
+			if(t[i][1].equals("Sparziel")){
+				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(t[i][4]);
 			}
 		}
 		einnahmen_minus_schulden_und_sz_bis_akt_pos = einnahmen - gesamtschulden - alle_sparziele_bis_aktuelle_pos;
-		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(readCSV(zeile, 4))){
-			return Double.parseDouble(readCSV(zeile,4));
+		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(t[zeile][4])){
+			return Double.parseDouble(t[zeile][4]);
 		}
-		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(readCSV(zeile, 4))){
+		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(t[zeile][4])){
 			if(einnahmen_minus_schulden_und_sz_bis_akt_pos < 0){
 				return 0.0;
 			}
