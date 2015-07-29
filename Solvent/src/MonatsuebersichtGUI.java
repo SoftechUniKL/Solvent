@@ -14,10 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+
 //github.com/SoftechUniKL/Solvent
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -130,10 +133,15 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblMonatsbersicht, BorderLayout.NORTH);
-
-				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer diesen Monat");
+				String[] months = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
+				Date date = java.util.Calendar.getInstance().getTime();
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
+				int dateToday = Integer.parseInt(dateFormatter.format(date));
+				
+				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
+				
 
 				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
 				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
@@ -141,9 +149,9 @@ public class MonatsuebersichtGUI extends JFrame {
     			
 				JLabel lblHierEinnahmenEinfgen = new JLabel(funktion ("einnahmen"));
 				
-				JLabel lblHierAusgabenEinfgen = new JLabel("Hier Ausgaben einfuegen");
+				JLabel lblHierAusgabenEinfgen = new JLabel(funktion ("ausgaben"));
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
-				JLabel lblRestbudgetEinfgen = new JLabel("Restbudget einfuegen");
+				JLabel lblRestbudgetEinfgen = new JLabel(String.valueOf(Double.parseDouble(funktion("einnahmen"))-Double.parseDouble(funktion("ausgaben"))));
 
 	    		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 	    		gl_contentPane.setHorizontalGroup(
@@ -220,7 +228,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnTbersicht.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-		/*		JFrame f = new JFrame( "Achtung!!!!!!!!!!! Julia ist Krank, bitte nichtmehr klicken!!!!");
+			JFrame f = new JFrame( "Achtung!!!!!!!!!!! Julia ist Krank, bitte nichtmehr klicken!!!!");
 				ImageIcon icon = new ImageIcon("data//53.jpg");
 				JLabel l1 = new JLabel (icon);
 				JPanel feld = new JPanel();
@@ -305,6 +313,14 @@ public class MonatsuebersichtGUI extends JFrame {
 			JFreeChart pie = ChartFactory.createPieChart("Ausgaben", pd);
 			ChartPanel piepanel = new ChartPanel(pie);
 			piepanel.setPreferredSize(new Dimension(500,500));
+			
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+			table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+			
+			DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+			rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+			table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
 	
 			GroupLayout gl_contentPane = new GroupLayout(contentPane);
 			gl_contentPane.setHorizontalGroup(
@@ -343,35 +359,45 @@ public class MonatsuebersichtGUI extends JFrame {
 		
 		btnEinnahmen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Test");
-				contentPane = new JPanel();
-				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-				setContentPane(contentPane);
-				JLabel lblUebersicht = new JLabel("Uebersicht ihrer Einnahmen");
-				
-		        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
-				
-				
-				ArrayList<Posten> einnahmen = CSVReader("data/einnahmen.csv");
-				
-				Object[][] data = new Object[einnahmen.size()][3];
-				int i = 0;
-				for (Posten p : einnahmen) {
-					data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
-							.format(p.getDatum());
-					data[i][1] = p.getBezeichnung();
-					data[i][2] = String.format("%.2f", p.getBetrag());
-					i++;
-				
-				}
-				
-			JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
-			JScrollPane scrollpane = new JScrollPane(table);
-			scrollpane.setBorder(BorderFactory.createEmptyBorder());
-			table.setPreferredSize(new Dimension(300,500));;
-			
 
+			contentPane = new JPanel();
+			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+			setContentPane(contentPane);
+			JLabel lblUebersicht = new JLabel("Uebersicht ihrer Einnahmen");
+		
+			JTable table = new JTable();
+			ArrayList<Posten> einnahmen = CSVReader("data/einnahmen.csv");
+				
+			Object[][] data = new Object[einnahmen.size()][3];
+			int i = 0;
+			for (Posten p : einnahmen) {
+				data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
+							.format(p.getDatum());
+				data[i][1] = p.getBezeichnung();
+				data[i][2] = String.format("%.2f", p.getBetrag());
+				i++;
+				
+			}
+			table.setModel(new DefaultTableModel(data,new String[] {"Datum", "Bezeichnung","Betrag"}));
+			
+			table.setEditingColumn(0);
+			table.setRowSelectionAllowed(true);
+			
+			JScrollPane scrollpane = new JScrollPane();
+			scrollpane.setEnabled(true);
+			scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollpane.setViewportView(table);
+			table.setPreferredSize(new Dimension(300,500));
+			
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+			table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+			
+			DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+			rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+			table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		
+			
 			// Kreisdiagramm
 			DefaultPieDataset pd = new DefaultPieDataset();
 			for (Posten p : einnahmen) {
@@ -380,10 +406,6 @@ public class MonatsuebersichtGUI extends JFrame {
 			JFreeChart pie = ChartFactory.createPieChart("Einnahmen", pd);
 			ChartPanel piepanel = new ChartPanel(pie);
 			piepanel.setPreferredSize(new Dimension(500,500));
-
-	
-			// Elemente dem Fenster hinzufuegen:
-			
 			GroupLayout gl_contentPane = new GroupLayout(contentPane);
 			gl_contentPane.setHorizontalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -437,22 +459,18 @@ public class MonatsuebersichtGUI extends JFrame {
 				scrollPane.setEnabled(true);
 				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+				String[][] table_array = Sparziel.readCSV();
+				for(int i = 0; i<table_array.length;i++){
+					table_array[i][5] = Sparziel.erreicht(i).toString();
+					}
 				
 				JTable Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
 				Tabelle.setEditingColumn(0);
-				
-				String[][] test = Sparziel.readCSV();
-				for(int i = 0; i<test.length;i++){
-					test[i][5] = Sparziel.erreicht(i).toString();
-				}
-				
 
-				
-				//Tabelle.setEnabled(false);
 				Tabelle.setRowSelectionAllowed(true);
 				Tabelle.setModel(new DefaultTableModel(
-						test,
+						table_array,
 					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
 				));
 				
@@ -557,21 +575,22 @@ public class MonatsuebersichtGUI extends JFrame {
 	    try {
 	        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
 	        String zeile="";
+	        int i = 0;
 	        while(null!=(zeile=FileReader.readLine())){         
 	            String[] split=zeile.split(",");
-	            int i = 0;
+	            
 	            for(int j = 0; j<split.length;j++){
 	            	file_as_array[i][j] = split[j];
 	            }
-	            	i++;  
+	            i++;  
 	        }
 	        FileReader.close();
 	        double gesamt = 0.0;
-	        for (int i = 0; i<file_as_array.length; i++ ){
-	        	if (Double.parseDouble(file_as_array[i][0].substring(3,5)) == Double.parseDouble(dateToday)){
-	        		gesamt = gesamt + Double.parseDouble(file_as_array[i][2]);
+	        
+	        for (int k = 0; k<file_as_array.length;k++ ){
+	        	if (Double.parseDouble(file_as_array[k][0].substring(3,5)) == Double.parseDouble(dateToday)){
+	        		gesamt = gesamt + Double.parseDouble(file_as_array[k][2]);
 	        	}
-	        	System.out.println(gesamt);
 	        }
 	        return String.valueOf(gesamt);
 	    } catch (Exception e) {
