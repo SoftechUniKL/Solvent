@@ -424,26 +424,21 @@ public class MonatsuebersichtGUI extends JFrame {
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
 				
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setEnabled(false);
-				scrollPane.setBorder( BorderFactory.createEmptyBorder() );
+				scrollPane.setEnabled(true);
 				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+				
+				String[][] table_array = Sparziel.readCSV();
+				for(int i = 0; i<table_array.length;i++){
+					table_array[i][5] = Sparziel.erreicht(i).toString();
+				}
 				
 				JTable Tabelle = new JTable();
 				scrollPane.setViewportView(Tabelle);
 				Tabelle.setEditingColumn(0);
 				
-				String[][] test = Sparziel.readCSV();
-				for(int i = 0; i<test.length;i++){
-					test[i][5] = Sparziel.erreicht(i).toString();
-				}
-				
-
-				
-				//Tabelle.setEnabled(false);
 				Tabelle.setRowSelectionAllowed(true);
 				Tabelle.setModel(new DefaultTableModel(
-						test,
+						table_array,
 					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
 				));
 				
@@ -452,7 +447,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				    Class<?> col_class = Tabelle.getColumnClass(c);
 				    Tabelle.setDefaultEditor(col_class, null);        // remove editor
 				}
-			
+				
 				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 				rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
 				Tabelle.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);

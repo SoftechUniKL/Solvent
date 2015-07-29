@@ -216,7 +216,7 @@ public Sparziel () {
 
 
 public static String[][] readCSV() {
-	 int number_of_rows = 0;
+	int number_of_rows = 0;
 	try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
         String zeile="";
@@ -227,10 +227,8 @@ public static String[][] readCSV() {
         
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Daten koennen nicht aufgerufen werden");
+        System.out.println("Größe des Arrays kann nicht festgelegt werden ");
     }
-	
-	
 	
 	String[][] erg = new String[number_of_rows][6];
     try {
@@ -245,7 +243,6 @@ public static String[][] readCSV() {
             	i++;    
         }
         FileReader.close();
-        
         return erg;
     } catch (Exception e) {
         e.printStackTrace();
@@ -257,32 +254,25 @@ public static String[][] readCSV() {
 
 	
 public static Double erreicht(int zeile){
-	
-	System.out.println("erreicht" + zeile + "\n");
-	
-	double einnahmen = 1000000;
+	double einnahmen = 1000;
 	double alle_schulden_bis_aktuelle_position = 0;
 	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
 	double gesamtschulden = 0;
 	double alle_sparziele_bis_aktuelle_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
-	String[][] t = readCSV();
+	String[][] table = readCSV();
 	try {
-		
-		System.out.println(t.length);
-		
-	if (t[zeile][1].equals("Schuld")){
+	if (table[zeile][1].equals("Schuld")){
 		for(int i = 0; i < zeile; i++){
-			if(t[i][1].equals("Schuld")){
-				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(t[i][4]);
-				System.out.println(i + " " + " " + t[i][1] + " " + t[i][4] + "\n");
+			if(table[i][1].equals("Schuld")){
+				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(table[i][4]);
 			}
 		}
 		einnahmen_minus_schulden_bis_aktuelle_pos = einnahmen - alle_schulden_bis_aktuelle_position;
-		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(t[zeile][4])){
-			return Double.parseDouble(t[zeile][4]);
+		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(table[zeile][4])){
+			return Double.parseDouble(table[zeile][4]);
 		}
-		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(t[zeile][4])){
+		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(table[zeile][4])){
 			if(einnahmen_minus_schulden_bis_aktuelle_pos < 0){
 				return 0.0;
 			}
@@ -291,25 +281,23 @@ public static Double erreicht(int zeile){
 			}
 		}
 	}
-	else if (t[zeile][1].equals("Sparziel")){
-		for(int i = 0; i<t.length; i++){
-			System.out.println("bla: " + i + " " + t.length);
-			if (t[i][1].equals("Schuld")){
-				gesamtschulden = gesamtschulden + Double.parseDouble((t[i][4]));
-				System.out.println(i + " "  + " " + t[i][1] + " " + t[i][4] + " " + t.length + "\n");
-			}
+	else if (table[zeile][1].equals("Sparziel")){
+		for(int i = 0; i<table.length; i++){
+			if (table[i][1].equals("Schuld")){
+				gesamtschulden = gesamtschulden + Double.parseDouble((table[i][4]));
+				}
 			
 		}
 		for(int i = 0; i < zeile; i++){
-			if(t[i][1].equals("Sparziel")){
-				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(t[i][4]);
+			if(table[i][1].equals("Sparziel")){
+				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(table[i][4]);
 			}
 		}
 		einnahmen_minus_schulden_und_sz_bis_akt_pos = einnahmen - gesamtschulden - alle_sparziele_bis_aktuelle_pos;
-		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(t[zeile][4])){
-			return Double.parseDouble(t[zeile][4]);
+		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(table[zeile][4])){
+			return Double.parseDouble(table[zeile][4]);
 		}
-		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(t[zeile][4])){
+		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(table[zeile][4])){
 			if(einnahmen_minus_schulden_und_sz_bis_akt_pos < 0){
 				return 0.0;
 			}
@@ -317,19 +305,13 @@ public static Double erreicht(int zeile){
 				return einnahmen_minus_schulden_und_sz_bis_akt_pos;
 			}
 		}
-		
-	}
-	else {
-		System.out.println("Eigentlich soll ich funktionieren :(");
 	}
 	}catch (Exception e) {
         e.printStackTrace();
         System.out.println("Fehler beim Verarbeiten der Daten!");
     }
 	return null;
-	
 }
-	
 }
 	
 
