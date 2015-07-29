@@ -1,9 +1,8 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -35,6 +34,20 @@ public class Testerinho {
 		
 	}
 	
+	@Test
+	public void testRun(){
+		
+			try {
+				MonatsuebersichtGUI frame = new MonatsuebersichtGUI();
+				frame.setVisible(true);
+				boolean testvariable = frame.isVisible();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	assertEquals("Der Mainframe wird nicht dargestellt", frame.isVisible(), true);
 	
+	}
+	}
 	
-}
+

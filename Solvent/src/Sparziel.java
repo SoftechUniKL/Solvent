@@ -227,7 +227,7 @@ public static String[][] readCSV() {
         
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Größe des Arrays kann nicht festgelegt werden ");
+        System.out.println("Groesse des Arrays kann nicht festgelegt werden ");
     }
 	
 	String[][] erg = new String[number_of_rows][6];
