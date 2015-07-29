@@ -128,7 +128,7 @@ public class Jahresuebersicht extends JFrame {
 	}
 	
 	
-	public String readCSVEinnahmen(int r, int c)	{
+	public String ReadCSVEinnahmen(int r, int c)	{
 		//Datei einlesen und splitten
 		FileReader myFile = null;
 		BufferedReader buff = null;
@@ -161,12 +161,17 @@ public class Jahresuebersicht extends JFrame {
 	        DatumEinnahmen[cnt++] = line.split("/");
 	    }
 	 
-	    // Ausgabe des Array
+	    // Umwandelung von String zu double und Ausgabe des Array
 	    for (String[] arrEinnahmen : einnahmen) {
+	    	for (int i = 0; i < lines.size(); i++)	{
+	    		double einnahmen1 = Double.parseDouble(arrEinnahmen[i]);
+	    	}
 //	        System.out.println(Arrays.toString(arrEinnahmen));
 	    }
 		return null;
 }
+	
+
 	public String readCSVAusgaben(int r, int c)	{
 		//Datei einlesen und splitten
 		FileReader myFile = null;
@@ -200,33 +205,18 @@ public class Jahresuebersicht extends JFrame {
 	        DatumAusgaben[cnt++] = line.split("/");
 	    }
 	 
-	    // Ausgabe des Array
+	    // Umwandelung von String zu double und Ausgabe des Array
 	    for (String[] arrAusgaben : ausgaben) {
-//	        System.out.println(Arrays.toString(arrAusgaben));
-/*	    	ArrayList<Long> ausgabeninLong = new ArrayList<Long>(arrAusgaben.length);
-	    	for(int j=0;j<arrAusgaben.length; j++)	{
-	    		ausgabeninLong.add(arrAusgaben.length.get(j).longValue());
+	    	for (int i = 0; i < lines.size(); i++)	{
+	    		double ausgaben1 = Double.parseDouble(arrAusgaben[i]);
 	    	}
-*/	    	
+//	        System.out.println(Arrays.toString(arrAusgaben));	    	
 	    }
 		return null;
 	}
+	/*	public static void main(String[]args)	{
 	
-
-/*	private ArrayList<Integer> convertToInteger(ArrayList<String> stringArray) {
-        ArrayList<Integer> ergebnisInInt = new ArrayList<Integer>();
-        for(String stringValue : stringArray) {
-            try {
-                //Umwandelung von String zu Integer und Speicherung in einer Arraylist aus Integern
-                ergebnisInInt.add(Integer.parseInt(stringValue));
-            } catch(NumberFormatException e) {
-               System.out.println("Fehler: " + e);
-            } 
-        }       
-        return ergebnisInInt;
-    }*/
-//	public static void main(String[]args)	{
-//		
-//	}
+	}
+*/
 }
 		
