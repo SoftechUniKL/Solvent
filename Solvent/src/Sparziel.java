@@ -215,10 +215,10 @@ public Sparziel () {
 
 
 
-public static String[][] readCSV() {
+public static String[][] readCSV(String filename) {
 	int number_of_rows = 0;
 	try {
-        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
+        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
         String zeile="";
         while(null!=(zeile=FileReader.readLine())){         
         	number_of_rows++; 
@@ -232,7 +232,7 @@ public static String[][] readCSV() {
 	
 	String[][] erg = new String[number_of_rows][6];
     try {
-        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/sparen.csv")));
+        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
         String zeile="";
         int i = 0;
         while(null!=(zeile=FileReader.readLine())){         
@@ -250,17 +250,29 @@ public static String[][] readCSV() {
     }
     return null;
 }
+
+public static Double verrechnen(){
+	double ein_gesamt = 0.0;
+	double aus_gesamt = 0.0;
+	for (int i = 0; i<readCSV("einnahmen").length; i++){
+		ein_gesamt = ein_gesamt + Double.parseDouble(readCSV("einnahmen")[i][2]);
+	}
+	for (int i = 0; i<readCSV("ausgaben").length; i++){
+		aus_gesamt = aus_gesamt + Double.parseDouble(readCSV("ausgaben")[i][2]);
+	}
+	return ein_gesamt-aus_gesamt;
 	
+}
 
 	
 public static Double erreicht(int zeile){
-	double einnahmen = 1000;
+	double einnahmen = verrechnen();
 	double alle_schulden_bis_aktuelle_position = 0;
 	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
 	double gesamtschulden = 0;
 	double alle_sparziele_bis_aktuelle_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
-	String[][] table = readCSV();
+	String[][] table = readCSV("sparen");
 	try {
 	if (table[zeile][1].equals("Schuld")){
 		for(int i = 0; i < zeile; i++){

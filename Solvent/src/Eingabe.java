@@ -196,12 +196,12 @@ import java.util.Calendar;
     		try {
     			fw = new FileWriter("data/"+n+".csv",true);
     			String datenow = new SimpleDateFormat("dd/MM/yyyy").format(spinner.getValue());
-    			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-    			String uhrzeit = sdf.format(new Date());
     			BufferedWriter bw = new BufferedWriter(fw);
-    			String test = datenow + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText())+ ","+ uhrzeit +"\n";
+    			String test = datenow + "," + textField_bezeichnung.getText() + "," + Double.parseDouble(textField_betrag.getText()) +"\n";
     			bw.write(test);
     			bw.close();
+    			MonatsuebersichtGUI.
+    			btnStart.doClick();
     			} 
     		catch (IOException e) {
     			System.out.println("Daten konnten nicht gespeichert werden!");
