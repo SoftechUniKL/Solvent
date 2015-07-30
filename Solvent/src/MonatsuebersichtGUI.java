@@ -571,18 +571,36 @@ public class MonatsuebersichtGUI extends JFrame {
 		ArrayList<Posten> file_as_array = new ArrayList<Posten>(); //Initialisieren der Ausgaben als Array mit Posten
 		try {
 			// Zeilenweises Einlesen der Daten
+		/** 
+		 * Reader for die Einnahmen und Ausgabenübersicht (In Anlehnung an Beispiel)
+		 */
+			
 			CSVReader reader = new CSVReader(new FileReader(filename));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-				
-				//DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMAN); //Erzeugen eines Parse Objekts
-				Date datum = df.parse(nextLine[0]); //Einlesen Datum und Parsing als Datum
-				String bezeichnung = nextLine[1]; //Einlesen der Bezeichnung
-				double betrag = Double.parseDouble(nextLine[2]); //Einlesen des Betrags
+				/**
+				 * Datum einlesen
+				 */
+				Date datum = df.parse(nextLine[0]);
+				/**
+				 * Bezeichnung einlesen
+				 */
+				String bezeichnung = nextLine[1]; 
+				/**
+				 * Betrag einlesen
+				 */
+				double betrag = Double.parseDouble(nextLine[2]); 
+				/**
+				 * Die eingelesenen Posten dem Array Hinzufügen, um sie für die weitere Verwendung referenzierbar zu machen
+				 */
 				file_as_array.add(new Posten(datum, bezeichnung, betrag)); //Posten dem Ausgabenarray Hinzufuegen
 			}
 			reader.close();
+			
+			/**
+			 * Exceptionhandling des Einlesens der CSV Dateien
+			 */
 		} catch (FileNotFoundException e) {
 			System.err.println("Die Datei wurde nicht gefunden!");
 			System.exit(1);
