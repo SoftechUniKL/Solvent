@@ -150,7 +150,9 @@ public Sparziel () {
             }
         );
 		       
-        //Modifiziert das Fenster "neue Buchung" und gibt Positionen der Buttons an 
+        /**
+		 * Determines Layout of the GUI components
+		 */
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -208,11 +210,14 @@ public Sparziel () {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-
-
-
 public static String[][] readCSV(String filename) {
+	/**
+	 * Commits the data of the received filename into an array
+	 */
 	int number_of_rows = 0;
+	/**
+	 * Defines the row size of the array
+	 */
 	try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
         String zeile="";
@@ -225,7 +230,9 @@ public static String[][] readCSV(String filename) {
         e.printStackTrace();
         System.out.println("Groesse des Arrays kann nicht festgelegt werden ");
     }
-	
+	/**
+	 * Displays the data of the CSV-file in an array
+	 */
 	String[][] erg = new String[number_of_rows][6];
     try {
         java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
@@ -247,12 +254,22 @@ public static String[][] readCSV(String filename) {
     return null;
 }
 
+/**
+ * Charges the earnings and the costs
+ * @return
+ */
 public static Double verrechnen(){
 	double ein_gesamt = 0.0;
 	double aus_gesamt = 0.0;
+	/**
+	 * Counts all the earnings
+	 */
 	for (int i = 0; i<readCSV("einnahmen").length; i++){
 		ein_gesamt = ein_gesamt + Double.parseDouble(readCSV("einnahmen")[i][2]);
 	}
+	/**
+	 * Counts all the ecosts
+	 */
 	for (int i = 0; i<readCSV("ausgaben").length; i++){
 		aus_gesamt = aus_gesamt + Double.parseDouble(readCSV("ausgaben")[i][2]);
 	}
@@ -260,7 +277,11 @@ public static Double verrechnen(){
 	
 }
 
-	
+/**
+ * Returns the amount of money which has already been saved for the single positions
+ * @param zeile
+ * @return
+ */
 public static Double erreicht(int zeile){
 	double einnahmen = verrechnen();
 	double alle_schulden_bis_aktuelle_position = 0;
@@ -269,8 +290,12 @@ public static Double erreicht(int zeile){
 	double alle_sparziele_bis_aktuelle_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
 	String[][] table = readCSV("sparen");
+	
 	try {
-	if (table[zeile][1].equals("Schuld")){
+		/**
+		 * Counts the 
+		 */
+		if (table[zeile][1].equals("Schuld")){
 		for(int i = 0; i < zeile; i++){
 			if(table[i][1].equals("Schuld")){
 				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(table[i][4]);
