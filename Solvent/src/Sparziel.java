@@ -30,68 +30,68 @@ public class Sparziel extends JFrame {
 	private JTextField textField_bezeichnung;
 	private JTextField textField_betrag = new JFormattedTextField(new DecimalFormat("#,###") );
 	
-	//Nennt das Fenster "Neue Buchung" und f�gt Buttons und Eingabefelder hinzu
+
 public Sparziel () {
 		
+	/**
+		 * Creates userdialog and its components for adding new debts and saving targets
+		 */
 		setTitle("Neues Ziel setzen");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(300, 200, 571, 270);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
+		ButtonGroup bg = new ButtonGroup();
 		JLabel lblNewLabel = new JLabel("Datum bis wann das Ziel erreicht werden soll:");	
 		JLabel lblNewLabel_1 = new JLabel("Bezeichnung:");	
 		JLabel lblNewLabel_2 = new JLabel("Betrag in \u20AC:");
-		
+		JLabel lblBuchenAls = new JLabel("Buchen als...");
+		JRadioButton rdbtnSparziel = new JRadioButton("Sparziel");	
+		JRadioButton rdbtnSchulden = new JRadioButton("Schulden");
+		JButton btnFertig = new JButton("Fertig");
 		textField_bezeichnung = new JTextField();
 		textField_bezeichnung.setColumns(10);	
 		textField_betrag = new JTextField();
 		textField_betrag.setColumns(10);
-		
-		JLabel lblBuchenAls = new JLabel("Buchen als...");
-
-		JRadioButton rdbtnSparziel = new JRadioButton("Sparziel");	
-		JRadioButton rdbtnSchulden = new JRadioButton("Schulden");
-		
-		//Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgew�hlt werden kann 
-		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnSchulden);
 		bg.add(rdbtnSparziel);
-		
-		//Kreiert den Button "Fertig" und die Spinner f�r das Datum
-		JButton btnFertig = new JButton("Fertig");
-		
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 		long now = (new Date()).getTime();
 		long tagMillis = 24*60*60*1000;
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(now), new Date(now-tagMillis*356),new Date(now+tagMillis*356),Calendar.DATE));
 		spinner.setEditor( new JSpinner.DateEditor(spinner, "dd/MM/yyyy" ) );
 	
-		
-		//Weist dem Button "Fertig" Aktionen beim Klicken zu 
+		/**
+		 * Adds ActionListener for button "btnFertig"
+		 */
         btnFertig.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+            	/**
+            	 * Exception handling for wrong inputs
+            	 */
             	if (textField_bezeichnung.getText().equals("") ) {
         			JFrame f = new JFrame( "Achtung" );
         		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
         		    f.setSize( 250, 100 );
         		    f.getContentPane().add( new JLabel( "Bitte geben Sie eine Bezeichnung an!") );
-        		    f.setVisible( true );
+        		    f.setVisible(true);
         		}
         		else if (textField_betrag.getText().equals("")) {
         			JFrame f = new JFrame( "Achtung" );
         		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
         		    f.setSize( 250, 100 );
         		    f.getContentPane().add( new JLabel( "Bitte geben Sie einen Betrag an!") );
-        		    f.setVisible( true );
+        		    f.setVisible(true);
         		}
         		else {
+        			/**
+        			 * Tries to get a double value from the textfield "textField_betrag"
+        			 */
         			try {
                 		Double.parseDouble(textField_betrag.getText());
                 		/**
-                		 * Wenn einer der beiden Buttons "Einnahme" oder "Ausgabe" angeklickt wurde, werden die eingegebenen 
-                		 * Informationen in der entsprechenden CSV Datei gespeichert, andernfalls wird eine Felhermeldung ausgegeben
+                		 * Saves the input data depending on their type 
                 		 */
                 		if (rdbtnSparziel.isSelected()){
             				speichern("Sparziel");
@@ -102,15 +102,18 @@ public Sparziel () {
             				dispose();
             				}
             			else {
+            				/**
+            				 * Opens message box when there is no type selected
+            				 */
             				JFrame f = new JFrame( "Achtung" );
                 		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
                 		    f.setSize(470, 100);
                 		    f.getContentPane().add( new JLabel( "Bitte waehlen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
                 		    f.setVisible( true );
-            		}
-                		} 
+            			}
+                	} 
         			/**
-        			 * Handelt es sich, bei dem f�r den Betrag eingegebenen Wert, nicht um eine Zahl, wird eine Fehlermeldung ausgegeben
+        			 * Catches NumberFormatException
         			 */
         			catch (NumberFormatException ex) {
         				JFrame f = new JFrame( "Achtung" );
@@ -122,6 +125,10 @@ public Sparziel () {
         		}
             }
             	 
+            /**
+             * Function to save the data in sparen.csv
+             * @param n
+             */
             public void speichern(String n) {
         		FileWriter fw;
         		try {
