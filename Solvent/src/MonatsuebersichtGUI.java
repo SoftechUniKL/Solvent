@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,10 +20,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 //github.com/SoftechUniKL/Solvent
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -124,18 +128,27 @@ public class MonatsuebersichtGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				/*contentPane = new JPanel() {  
+			/**	contentPane = new JPanel() {  
 				public void paintComponent(Graphics g) { Image img = Toolkit.getDefaultToolkit().getImage(MonatsuebersichtGUI.class.getResource("/data/background.jpg"));  
 				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
 				 } 
-				}; */
+				}; 
+				
+				*/
 				
 				
 				/**
 				 * Creates Labels and Buttons
 				 */
 				
-				
+		    	/**try {
+		    	setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("data/background.jpg")))));
+		    	setLayout(new FlowLayout());
+		    	} catch (IOException g) {
+		    		g.printStackTrace();
+		    	}
+		    	*/
+		    	
 				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
 				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
@@ -153,6 +166,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
 				
 			
+				
 
 				/**
 				 * Determines Layout of the GUI components
@@ -210,6 +224,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	    			);
 	    		contentPane.setLayout(gl_contentPane);
 	    		contentPane.removeAll();
+	    	
 	    		
 	    		
 	    		/**
