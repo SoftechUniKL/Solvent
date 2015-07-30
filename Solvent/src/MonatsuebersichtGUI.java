@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,14 +25,12 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -43,7 +44,6 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.opencsv.CSVReader;
@@ -133,19 +133,25 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
-				JLabel lblHierEinnahmenEinfgen = new JLabel(funktion ("einnahmen"));
-				JLabel lblHierAusgabenEinfgen = new JLabel(funktion ("ausgaben"));
+				JLabel lblHierEinnahmenEinfgen = new JLabel(gesamt_monat ("einnahmen"));
+				JLabel lblHierAusgabenEinfgen = new JLabel(gesamt_monat ("ausgaben"));
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
-				JLabel lblRestbudgetEinfgen = new JLabel(String.valueOf(Double.parseDouble(funktion("einnahmen"))-Double.parseDouble(funktion("ausgaben"))));
+				JLabel lblRestbudgetEinfgen = new JLabel(String.valueOf(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben"))));
 				
 				String[] months = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
 				Date date = java.util.Calendar.getInstance().getTime();
 				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
 				int dateToday = Integer.parseInt(dateFormatter.format(date));
 				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
+				
+				contentPane = new JPanel() {  
+				public void paintComponent(Graphics g) { Image img = Toolkit.getDefaultToolkit().getImage(MonatsuebersichtGUI.class.getResource("/data/background.jpg"));  
+				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+				 }  
+				}; 
 
 				/**
-				 * Detremines Layout of the GUI components
+				 * Determines Layout of the GUI components
 				 */
 				lblMonatsbersicht.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblMonatsbersicht, BorderLayout.NORTH);GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -201,6 +207,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	    		contentPane.setLayout(gl_contentPane);
 	    		contentPane.removeAll();
 	    		
+	    		
 	    		/**
 	    		 * Creates ActionListener for the Buttons "Buchung hinzufügen" & "Sparziel hinzufügen"
 	    		 */
@@ -231,8 +238,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				Object[][] data = new Object[ausgaben.size()][3];
 				int i = 0;
 				for (Posten p : ausgaben) {
-					data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
-							.format(p.getDatum());
+					data[i][0] = new SimpleDateFormat("dd/MM/yyyy").format(p.getDatum());
 					data[i][1] = p.getBezeichnung();
 					data[i][2] = String.format("%.2f", p.getBetrag());
 					i++;
@@ -242,7 +248,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				 */
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-				JLabel lblUebersicht = new JLabel("Uebersicht ihrer Ausgaben");
+				JLabel lblUebersicht = new JLabel("Uebersicht ihrer gesamten Ausgaben");
 				JLabel lblLschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
@@ -273,10 +279,14 @@ public class MonatsuebersichtGUI extends JFrame {
 				ChartPanel piepanel = new ChartPanel(pie);
 				piepanel.setPreferredSize(new Dimension(500,500));
 			
-				
-				
+				/**
+				 * Invokes the funciont loeschen
+				 */
 				loeschen("einnahmen", btnEinnahmen, table);
-	
+				
+				/**
+				 * Determines Layout of the GUI components
+				 */
 				GroupLayout gl_contentPane = new GroupLayout(contentPane);
 				gl_contentPane.setHorizontalGroup(
 						gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -293,8 +303,7 @@ public class MonatsuebersichtGUI extends JFrame {
 														.addGap(20))))
 														.addGroup(gl_contentPane.createSequentialGroup()
 																.addComponent(lblLschen, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
-																.addContainerGap(696, Short.MAX_VALUE))
-						);
+																.addContainerGap(696, Short.MAX_VALUE)));
 				gl_contentPane.setVerticalGroup(
 						gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -306,74 +315,74 @@ public class MonatsuebersichtGUI extends JFrame {
 										.addComponent(piepanel))
 										.addGap(20)
 										.addComponent(lblLschen)
-						.addGap(20))
-						);
+						.addGap(20)));
 				scrollPane.setViewportView(table);
 				contentPane.setLayout(gl_contentPane);
 				contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
 			}
-			
-			
-		
-
 			});
 		
+		/**
+		 * Add ActionListener for Button Einnahmen
+		 */
 		btnEinnahmen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-			contentPane = new JPanel();
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			setContentPane(contentPane);
-			JLabel lblUebersicht = new JLabel("Uebersicht ihrer Einnahmen");
-		
-			JTable table = new JTable();
-			ArrayList<Posten> einnahmen = CSVReader("data/einnahmen.csv");
+				/**
+				 * Commits filecontents to "data"-array
+				 */
+				ArrayList<Posten> einnahmen = CSVReader("data/einnahmen.csv");
+				Object[][] data = new Object[einnahmen.size()][3];
+				int i = 0;
+				for (Posten p : einnahmen) {
+					data[i][0] = new SimpleDateFormat("dd/MM/yyyy").format(p.getDatum());
+					data[i][1] = p.getBezeichnung();
+					data[i][2] = String.format("%.2f", p.getBetrag());
+					i++;
+				}
+				/**
+				 * Creates basic GUI components
+				 */
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				JLabel lblUebersicht = new JLabel("Uebersicht ihrer gesamten Einnahmen");
+				JLabel lblLschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setViewportBorder(null);
+				scrollPane.setBorder(null);
+				scrollPane.setBorder(BorderFactory.createEmptyBorder());
+				setContentPane(contentPane);
 				
-			Object[][] data = new Object[einnahmen.size()][3];
-			int i = 0;
-			for (Posten p : einnahmen) {
-				data[i][0] = new SimpleDateFormat("dd/MM/yyyy")
-							.format(p.getDatum());
-				data[i][1] = p.getBezeichnung();
-				data[i][2] = String.format("%.2f", p.getBetrag());
-				i++;
+				/**
+				 * Creates table
+				 */
+				JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
+				table.setPreferredSize(new Dimension(300,500));
+				DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+				table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+				rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+				table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
 				
-			}
-			table.setModel(new DefaultTableModel(data,new String[] {"Datum", "Bezeichnung","Betrag"}));
+				/**
+				 * Creates piechart
+				 */
+				DefaultPieDataset pd = new DefaultPieDataset();
+				for (Posten p : einnahmen) {
+					pd.setValue(p.getBezeichnung(), p.getBetrag());
+					}
+				JFreeChart pie = ChartFactory.createPieChart("Einnahmen", pd);
+				ChartPanel piepanel = new ChartPanel(pie);
+				piepanel.setPreferredSize(new Dimension(500,500));
 			
-			table.setEditingColumn(0);
-			table.setRowSelectionAllowed(true);
-			
-			
-			JScrollPane scrollpane = new JScrollPane();
-			scrollpane.setEnabled(true);
-			scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			scrollpane.setViewportView(table);
-			table.setPreferredSize(new Dimension(300,500));
-			scrollpane.setBorder(BorderFactory.createEmptyBorder());
-			
-			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-			table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-			
-			DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-			rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-			table.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-		
-			
-			// Kreisdiagramm
-			DefaultPieDataset pd = new DefaultPieDataset();
-			for (Posten p : einnahmen) {
-				pd.setValue(p.getBezeichnung(), p.getBetrag());
-			}
-			JFreeChart pie = ChartFactory.createPieChart("Einnahmen", pd);
-			ChartPanel piepanel = new ChartPanel(pie);
-			piepanel.setPreferredSize(new Dimension(500,500));
-			
-			JLabel lblLschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
-			
-			loeschen("einnahmen", btnEinnahmen, table);
-	
+				/**
+				 * Invokes the funciont loeschen
+				 */
+				loeschen("einnahmen", btnEinnahmen, table);
+				
+				/**
+				 * Determines Layout of the GUI components
+				 */
 			GroupLayout gl_contentPane = new GroupLayout(contentPane);
 			gl_contentPane.setHorizontalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -384,7 +393,7 @@ public class MonatsuebersichtGUI extends JFrame {
 								.addComponent(lblUebersicht, GroupLayout.PREFERRED_SIZE, 690, GroupLayout.PREFERRED_SIZE)
 								.addContainerGap(696, Short.MAX_VALUE))
 							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(scrollpane)
+								.addComponent(scrollPane)
 								.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
 								.addComponent(piepanel)
 								.addGap(20))))
@@ -399,13 +408,13 @@ public class MonatsuebersichtGUI extends JFrame {
 						.addComponent(lblUebersicht)
 						.addGap(20)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(scrollpane)
+							.addComponent(scrollPane)
 							.addComponent(piepanel))
 						.addGap(20)
 						.addComponent(lblLschen)
 						.addGap(20))
 			);
-			scrollpane.setViewportView(table);
+			scrollPane.setViewportView(table);
 			contentPane.setLayout(gl_contentPane);
 			contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
 		}
@@ -415,96 +424,109 @@ public class MonatsuebersichtGUI extends JFrame {
 
 			});
 		
-		
 		/**
-		 * Fuegt dem Button Sparen eine Aktion beim Klicken hinzu
+		 * Add ActionListener for Button Einnahmen
 		 */
 		btnSparen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sparziel = new Sparziel();
-				contentPane = new JPanel();
-				contentPane.setBorder(new EmptyBorder(5, 5, 20, 5));
-				setContentPane(contentPane);
-
-				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
-				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
-				
-				JLabel lblLoeschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
-				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setEnabled(true);
-				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				
-
+				/**
+				 * Commits filecontents to "data"-array
+				 */
 				String[][] table_array = Sparziel.readCSV("sparen");
 				for(int i = 0; i<table_array.length;i++){
 					table_array[i][5] = Sparziel.erreicht(i).toString();
 					}
-				
+				/**
+				 * Creates basic GUI components
+				 */
+				sparziel = new Sparziel();
+				contentPane = new JPanel();
+				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
+				JLabel lblLoeschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
+				JScrollPane scrollPane = new JScrollPane();
 				JTable Tabelle = new JTable();
+				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
+				scrollPane.setEnabled(true);
 				scrollPane.setViewportView(Tabelle);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				contentPane.setBorder(new EmptyBorder(5, 5, 20, 5));
+				setContentPane(contentPane);
+				
+				/**
+				 * Modifies table "Tabelle"
+				 */
 				Tabelle.setEditingColumn(0);
-
 				Tabelle.setRowSelectionAllowed(true);
-				Tabelle.setModel(new DefaultTableModel(
-						table_array,
-					new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}
-				));
-				
-				for (int c = 0; c < Tabelle.getColumnCount(); c++)
-				{
+				Tabelle.setModel(new DefaultTableModel(table_array,new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}));
+				for (int c = 0; c < Tabelle.getColumnCount(); c++){
 				    Class<?> col_class = Tabelle.getColumnClass(c);
-				    Tabelle.setDefaultEditor(col_class, null);        // remove editor
-				}
+				    Tabelle.setDefaultEditor(col_class, null);        
+					}
 				
+				/**
+				 * Adds MouseListener for a selected row of the table "Tabelle"
+				 */
 				Tabelle.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewählten Eintrag löschen?","",JOptionPane.YES_NO_OPTION);
+						/**
+						 * If the Yes-Button has been clicked, the following procedures are performed
+						 */
 						if (eingabe == JOptionPane.YES_OPTION){
+						/**
+						 * Deletes every entry of sparen.csv 
+						 */
 						try{
-							BufferedWriter bw1 = new BufferedWriter(new FileWriter("data/sparen.csv"));
-							bw1.write("");
-							bw1.close();
-						}catch (Exception z) {
-						    z.printStackTrace();
-						    System.out.println("Problem beim Überschreiben des Arrays_1");
+							BufferedWriter bw_1 = new BufferedWriter(new FileWriter("data/sparen.csv"));
+							bw_1.write("");
+							bw_1.close();
 						}
+						catch (Exception z) {
+						    z.printStackTrace();
+						    System.out.println("Problem beim Löschen des Inhaltes der CSV-Datei");
+						}
+						/**
+						 * Writes each entry of the table, except the deleted one, in sparen.csv
+						 */
 						for (int i = 0; i<=Tabelle.getRowCount(); i++){
 							if (i != Tabelle.getSelectedRow()){
 								try{
 									FileWriter fw= new FileWriter("data/sparen.csv",true);
-									BufferedWriter bw = new BufferedWriter(fw);
-									String zeile = Tabelle.getValueAt(i, 0) + "," + Tabelle.getValueAt(i,1) + "," + Tabelle.getValueAt(i,2) + "," +Tabelle.getValueAt(i,3) + "," +Tabelle.getValueAt(i,4) + "\n";
-									bw.write(zeile);
-									bw.close();
+									BufferedWriter bw_2 = new BufferedWriter(fw);
+									String zeile = Tabelle.getValueAt(i,0) + "," + Tabelle.getValueAt(i,1) + "," + Tabelle.getValueAt(i,2) + "," +Tabelle.getValueAt(i,3) + "," +Tabelle.getValueAt(i,4) + "\n";
+									bw_2.write(zeile);
+									bw_2.close();
 									fw.close();
-								}catch (Exception z) {
-								     System.out.println("Problem beim Überschreiben des Arrays_2");
+								}
+								catch (Exception z) {
+								     System.out.println("Problem beim Überschreiben des Arrays");
 								}
 							}
 						}
 						JOptionPane.getRootFrame().dispose();
 						btnSparen.doClick();
 						}
+						/**
+						 * If the No-Button has been clicked, the message window will be closed
+						 */
 						else if (eingabe == JOptionPane.NO_OPTION){
 							JOptionPane.getRootFrame().dispose();
 						}
-						
 					}
 				});
 				
-			
+				/**
+				 * Determines Layout of the GUI components
+				 */
 				DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 				rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
 				Tabelle.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 				Tabelle.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
-				
 				DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 				Tabelle.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 				Tabelle.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 				Tabelle.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-				
 				Tabelle.getColumnModel().getColumn(0).setPreferredWidth(80);
 				Tabelle.getColumnModel().getColumn(1).setPreferredWidth(60);
 				Tabelle.getColumnModel().getColumn(2).setPreferredWidth(60);
@@ -513,8 +535,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				Tabelle.getColumnModel().getColumn(5).setPreferredWidth(50);
 				Tabelle.setToolTipText("");
 				contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblRestbudget, scrollPane, Tabelle}));
-				
-				
 				GroupLayout gl_contentPane = new GroupLayout(contentPane);
 				gl_contentPane.setHorizontalGroup(
 					gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -539,7 +559,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				);
 				contentPane.setLayout(gl_contentPane);
 			}	
-			
 		});
 		btnStart.doClick();
 	}
@@ -573,11 +592,22 @@ public class MonatsuebersichtGUI extends JFrame {
 	return file_as_array;
 	}
 	
-	public static String funktion (String filename){
+	/**
+	 * Returns the earnings and the costs for the current month 
+	 * @param filename
+	 * @return
+	 */
+	public static String gesamt_monat (String filename){
+		/**
+		 * Variables get initialized
+		 */
 		int number_of_rows = 0;
 		Date date = java.util.Calendar.getInstance().getTime();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
 		String dateToday = dateFormatter.format(date);
+		/**
+		 * Size of the needed array gets determined
+		 */
 		try {
 	        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
 	        String zeile="";
@@ -585,11 +615,14 @@ public class MonatsuebersichtGUI extends JFrame {
 	        	number_of_rows++; 
 	        }
 	        FileReader.close();    
-	    } catch (Exception e) {
+	    } 
+		catch (Exception e) {
 	        e.printStackTrace();
 	        System.out.println("Groesse des Arrays kann nicht festgelegt werden ");
 	    }
-		
+		/**
+		 * Array gets filled with data from the CSV-data
+		 */
 		String[][] file_as_array = new String[number_of_rows][4];
 	    try {
 	        java.io.BufferedReader FileReader = new java.io.BufferedReader(new java.io.FileReader(new java.io.File("data/"+filename+".csv")));
@@ -597,7 +630,6 @@ public class MonatsuebersichtGUI extends JFrame {
 	        int i = 0;
 	        while(null!=(zeile=FileReader.readLine())){         
 	            String[] split=zeile.split(",");
-	            
 	            for(int j = 0; j<split.length;j++){
 	            	file_as_array[i][j] = split[j];
 	            }
@@ -605,27 +637,41 @@ public class MonatsuebersichtGUI extends JFrame {
 	        }
 	        FileReader.close();
 	        double gesamt = 0.0;
-	        
 	        for (int k = 0; k<file_as_array.length;k++ ){
-	        	if (Double.parseDouble(file_as_array[k][0].substring(3,5)) == Double.parseDouble(dateToday)){
+	        	if (Integer.parseInt(file_as_array[k][0].substring(3,5)) == Integer.parseInt(dateToday)){
 	        		gesamt = gesamt + Double.parseDouble(file_as_array[k][2]);
 	        	}
 	        }
 	        return String.valueOf(gesamt);
-	    } catch (Exception e) {
+	    } 
+	    catch (Exception e) {
 	        e.printStackTrace();
 	        System.out.println("Daten koennen nicht aufgerufen werden");
 	    }
 	    return null;
 	}
 	
-	
+	/**
+	 * Creates the function "loeschen" for the CSV-files ausgaben & einnahmen
+	 * @param filename
+	 * @param btnname
+	 * @param table
+	 * @return
+	 */
 	public static String loeschen (String filename, JButton btnname, JTable table){
+		/**
+		 * Adds MouseListener for a selected row of the table "table"
+		 */
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewählten Eintrag löschen?","",JOptionPane.YES_NO_OPTION);
-				
+				/**
+				 * If the Yes-Button has been clicked, the following procedures are performed
+				 */
 				if (eingabe == JOptionPane.YES_OPTION){
+				/**
+				* Deletes every entry of the comitted CSV-data
+				*/
 				try{
 					BufferedWriter bw1 = new BufferedWriter(new FileWriter("data/"+filename+".csv"));
 					bw1.write("");
@@ -634,6 +680,9 @@ public class MonatsuebersichtGUI extends JFrame {
 				    z.printStackTrace();
 				    System.out.println("Problem beim Überschreiben des Arrays_1");
 				}
+				/**
+				 * Writes each entry of the table, except the deleted one, in the comitted CSV-data
+				 */
 				for (int i = 0; i<=table.getRowCount(); i++){
 					if (i != table.getSelectedRow()){
 						try{
@@ -650,10 +699,12 @@ public class MonatsuebersichtGUI extends JFrame {
 				JOptionPane.getRootFrame().dispose();
 				btnname.doClick();
 				}
+				/**
+				 * If the No-Button has been clicked, the message window will be closed
+				 */
 				else if (eingabe == JOptionPane.NO_OPTION){
 					JOptionPane.getRootFrame().dispose();
 				}
-				
 			}
 		});
 		return null;
