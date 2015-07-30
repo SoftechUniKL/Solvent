@@ -18,24 +18,24 @@ import org.jfree.data.general.DefaultPieDataset;
  * Graphische Benutzeroberflaeche des BudgetPlaners
  * 
  */
-public class BudgetPlanGUI extends JFrame {
-	private static final long serialVersionUID = 1L;
+//public class BudgetPlanGUI extends JFrame {
+//	private static final long serialVersionUID = 1L;
 	/**
 	 * Tabelle mit Uebersicht der Ausgaben
 	 */
-	private JTable table;
+//	private JTable table;
 	/**
 	 * Scrollelemente, das die Tabelle umfasst
 	 */
-	private JScrollPane scrollpane;
+//	private JScrollPane scrollpane;
 	/**
 	 * Schaltflaeche, die beim Klicken einen Dialog anzeigt
 	 */
-	private JButton button;
+//	private JButton button;
 	/**
 	 * Modell der Daten
 	 */
-	private BudgetPlanModel budget;
+	//private BudgetPlanModel budget;
 
 	/**
 	 * Konstruktor fuer die GUI.

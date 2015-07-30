@@ -116,7 +116,7 @@ public Sparziel () {
             				JFrame f = new JFrame( "Achtung" );
                 		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
                 		    f.setSize(470, 100);
-                		    f.getContentPane().add( new JLabel( "Bitte w�hlen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
+                		    f.getContentPane().add( new JLabel( "Bitte waehlen Sie aus, ob es sich um ein Sparziel oder eine Schuldenposition handelt!") );
                 		    f.setVisible( true );
             		}
                 		} 
@@ -127,7 +127,7 @@ public Sparziel () {
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
             		    f.setSize(470, 100);
-            		    f.add( new JLabel( "Bitte geben sie f�r den Betrag eine Zahl ein") );
+            		    f.add( new JLabel( "Bitte geben sie fuer den Betrag eine Zahl ein") );
             		    f.setVisible( true );
                 		}
         		}

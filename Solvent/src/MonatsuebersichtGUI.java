@@ -125,9 +125,20 @@ public class MonatsuebersichtGUI extends JFrame {
 		 */
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				/*contentPane = new JPanel() {  
+				public void paintComponent(Graphics g) { Image img = Toolkit.getDefaultToolkit().getImage(MonatsuebersichtGUI.class.getResource("/data/background.jpg"));  
+				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
+				 } 
+				}; */
+				
+				
 				/**
 				 * Creates Labels and Buttons
 				 */
+				
+				
 				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
 				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
@@ -138,17 +149,13 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
 				JLabel lblRestbudgetEinfgen = new JLabel(String.valueOf(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben"))));
 				
-				String[] months = {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
+				String[] months = {"Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
 				Date date = java.util.Calendar.getInstance().getTime();
 				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
 				int dateToday = Integer.parseInt(dateFormatter.format(date));
 				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
 				
-				contentPane = new JPanel() {  
-				public void paintComponent(Graphics g) { Image img = Toolkit.getDefaultToolkit().getImage(MonatsuebersichtGUI.class.getResource("/data/background.jpg"));  
-				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
-				 }  
-				}; 
+			
 
 				/**
 				 * Determines Layout of the GUI components
@@ -209,7 +216,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	    		
 	    		
 	    		/**
-	    		 * Creates ActionListener for the Buttons "Buchung hinzufügen" & "Sparziel hinzufügen"
+	    		 * Creates ActionListener for the Buttons "Buchung hinzufï¿½gen" & "Sparziel hinzufï¿½gen"
 	    		 */
 				btnHinzufuegen.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -282,7 +289,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				/**
 				 * Invokes the funciont loeschen
 				 */
-				loeschen("einnahmen", btnEinnahmen, table);
+				loeschen("ausgaben", btnAusgaben, table);
 				
 				/**
 				 * Determines Layout of the GUI components
@@ -345,7 +352,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				JLabel lblUebersicht = new JLabel("Uebersicht ihrer gesamten Einnahmen");
-				JLabel lblLschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
+				JLabel lblLschen = new JLabel("Zum Loeschen eines Eintrags, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
 				scrollPane.setBorder(null);
@@ -442,7 +449,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				sparziel = new Sparziel();
 				contentPane = new JPanel();
 				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
-				JLabel lblLoeschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
+				JLabel lblLoeschen = new JLabel("Zum Loeschen eines Eintrags, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
 				JScrollPane scrollPane = new JScrollPane();
 				JTable Tabelle = new JTable();
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
@@ -468,7 +475,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				 */
 				Tabelle.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewählten Eintrag löschen?","",JOptionPane.YES_NO_OPTION);
+						int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewaehlten Eintrag loeschen?","",JOptionPane.YES_NO_OPTION);
 						/**
 						 * If the Yes-Button has been clicked, the following procedures are performed
 						 */
@@ -483,7 +490,7 @@ public class MonatsuebersichtGUI extends JFrame {
 						}
 						catch (Exception z) {
 						    z.printStackTrace();
-						    System.out.println("Problem beim Löschen des Inhaltes der CSV-Datei");
+						    System.out.println("Problem beim Loeschen des Inhaltes der CSV-Datei");
 						}
 						/**
 						 * Writes each entry of the table, except the deleted one, in sparen.csv
@@ -499,7 +506,7 @@ public class MonatsuebersichtGUI extends JFrame {
 									fw.close();
 								}
 								catch (Exception z) {
-								     System.out.println("Problem beim Überschreiben des Arrays");
+								     System.out.println("Problem beim Ueberschreiben des Arrays");
 								}
 							}
 						}
@@ -664,7 +671,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		 */
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewählten Eintrag löschen?","",JOptionPane.YES_NO_OPTION);
+				int eingabe = JOptionPane.showConfirmDialog(null,"Wollen Sie den ausgewaehlten Eintrag loeschen?","",JOptionPane.YES_NO_OPTION);
 				/**
 				 * If the Yes-Button has been clicked, the following procedures are performed
 				 */
@@ -678,7 +685,7 @@ public class MonatsuebersichtGUI extends JFrame {
 					bw1.close();
 				}catch (Exception z) {
 				    z.printStackTrace();
-				    System.out.println("Problem beim Überschreiben des Arrays_1");
+				    System.out.println("Problem beim Ueberschreiben des Arrays_1");
 				}
 				/**
 				 * Writes each entry of the table, except the deleted one, in the comitted CSV-data
