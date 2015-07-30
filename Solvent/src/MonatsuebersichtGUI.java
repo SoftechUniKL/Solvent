@@ -247,6 +247,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
 				scrollPane.setBorder(null);
+				scrollPane.setBorder(BorderFactory.createEmptyBorder());
 				setContentPane(contentPane);
 				
 				/**
@@ -274,9 +275,6 @@ public class MonatsuebersichtGUI extends JFrame {
 			
 				
 				
-				
-				JScrollPane scrollpane = new JScrollPane(table);
-				scrollpane.setBorder(BorderFactory.createEmptyBorder());
 				loeschen("einnahmen", btnEinnahmen, table);
 	
 				GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -352,6 +350,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			scrollpane.setViewportView(table);
 			table.setPreferredSize(new Dimension(300,500));
+			scrollpane.setBorder(BorderFactory.createEmptyBorder());
 			
 			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
