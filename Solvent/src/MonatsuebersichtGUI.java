@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -144,10 +141,10 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
-				JLabel lblHierEinnahmenEinfgen = new JLabel(gesamt_monat ("einnahmen"));
-				JLabel lblHierAusgabenEinfgen = new JLabel(gesamt_monat ("ausgaben"));
+				JLabel lblHierEinnahmenEinfgen = new JLabel(gesamt_monat ("einnahmen")+" \u20ac");
+				JLabel lblHierAusgabenEinfgen = new JLabel(gesamt_monat ("ausgaben")+" \u20ac");
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
-				JLabel lblRestbudgetEinfgen = new JLabel(String.valueOf(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben"))));
+				JLabel lblRestbudgetEinfgen = new JLabel(" "+ String.valueOf(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben")))+" \u20ac");
 				
 				String[] months = {"Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
 				Date date = java.util.Calendar.getInstance().getTime();
@@ -266,7 +263,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				/**
 				 * Creates table
 				 */
-				JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
+				JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag (\u20ac)" });
 				table.setPreferredSize(new Dimension(300,500));
 				DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -362,7 +359,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				/**
 				 * Creates table
 				 */
-				JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag" });
+				JTable table = new JTable(data, new Object[] { "Datum", "Bezeichnung","Betrag (\u20ac)" });
 				table.setPreferredSize(new Dimension(300,500));
 				DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 				centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -464,7 +461,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				 */
 				Tabelle.setEditingColumn(0);
 				Tabelle.setRowSelectionAllowed(true);
-				Tabelle.setModel(new DefaultTableModel(table_array,new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag", "Bereits erreicht"}));
+				Tabelle.setModel(new DefaultTableModel(table_array,new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag (\u20ac)", "Bereits erreicht(\u20ac)"}));
 				for (int c = 0; c < Tabelle.getColumnCount(); c++){
 				    Class<?> col_class = Tabelle.getColumnClass(c);
 				    Tabelle.setDefaultEditor(col_class, null);        

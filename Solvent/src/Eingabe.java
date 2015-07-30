@@ -47,7 +47,7 @@ import java.util.Calendar;
 		
 		JLabel lblNewLabel = new JLabel("Datum");	
 		JLabel lblNewLabel_1 = new JLabel("Bezeichnung");	
-		JLabel lblNewLabel_2 = new JLabel("Betrag in �");
+		JLabel lblNewLabel_2 = new JLabel("Betrag in \u20ac");
 		
 		textField_bezeichnung = new JTextField();
 		textField_bezeichnung.setColumns(10);	
