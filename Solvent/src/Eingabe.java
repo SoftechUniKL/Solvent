@@ -47,7 +47,7 @@ import java.util.Calendar;
 		
 		JLabel lblNewLabel = new JLabel("Datum");	
 		JLabel lblNewLabel_1 = new JLabel("Bezeichnung");	
-		JLabel lblNewLabel_2 = new JLabel("Betrag in €");
+		JLabel lblNewLabel_2 = new JLabel("Betrag in ï¿½");
 		
 		textField_bezeichnung = new JTextField();
 		textField_bezeichnung.setColumns(10);	
@@ -59,13 +59,13 @@ import java.util.Calendar;
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Ausgabe");	
 		JRadioButton rdbtnEinnahme = new JRadioButton("Einnahme");
 		/**
-		 * Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewählt werden kann 
+		 * Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgewï¿½hlt werden kann 
 		 */
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnEinnahme);
 		bg.add(rdbtnNewRadioButton);
 		/**
-		 * Kreiert den Button "Fertig" und die Spinner für das Datum
+		 * Kreiert den Button "Fertig" und die Spinner fï¿½r das Datum
 		 */
 		JButton btnFertig = new JButton("Fertig");
 		
@@ -137,8 +137,8 @@ import java.util.Calendar;
         	if (textField_bezeichnung.getText().equals("") ) {
     			JFrame f = new JFrame( "Achtung" );
     		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-    		    f.setSize( 250, 100 );
-    		    f.add( new JLabel( "Bitte geben Sie eine Bezeichnung an!") );
+    		    f.setBounds(350, 250, 250, 100);
+    		    f.add( new JLabel( "Bitte geben Sie eine Bezeichnung an!"));
     		    f.setVisible( true );   
         	}
         	/**
@@ -147,7 +147,7 @@ import java.util.Calendar;
     		else if (textField_betrag.getText().equals("")) {
     			JFrame f = new JFrame( "Achtung" );
     		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-    		    f.setSize( 250, 100 );
+    		    f.setBounds(350, 250, 250, 100);
     		    f.add( new JLabel( "Bitte geben Sie einen Betrag an!") );
     		    f.setVisible( true ); 
     		}
@@ -169,26 +169,26 @@ import java.util.Calendar;
         			else {
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-            		    f.setSize(470, 100);
-            		    f.add( new JLabel( "Bitte wählen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
+            		    f.setBounds(250, 250, 550, 100);
+            		    f.add( new JLabel( "Bitte waehlen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
             		    f.setVisible( true );
         		}
             		} 
     			/**
-    			 * Handelt es sich, bei dem für den Betrag eingegebenen Wert, nicht um eine Zahl, wird eine Fehlermeldung ausgegeben
+    			 * Handelt es sich, bei dem fï¿½r den Betrag eingegebenen Wert, nicht um eine Zahl, wird eine Fehlermeldung ausgegeben
     			 */
     			catch (NumberFormatException ex) {
     				JFrame f = new JFrame( "Achtung" );
         		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-        		    f.setSize(470, 100);
-        		    f.add( new JLabel( "Bitte geben sie für den Betrag eine Zahl ein") );
+        		    f.setBounds(350, 250, 450, 100);
+        		    f.add( new JLabel( "Bitte geben sie fuer den Betrag eine Zahl ein") );
         		    f.setVisible( true );
             		}
     		}
 
         } 
         /**
-         * Generieren der Funktion speichern, welche die zuvor ausgewählten Informationen abhängig von ihrer Herkunft "Einnahmen" oder "Ausgaben"
+         * Generieren der Funktion speichern, welche die zuvor ausgewï¿½hlten Informationen abhï¿½ngig von ihrer Herkunft "Einnahmen" oder "Ausgaben"
          * in 2 gleichnamige CSV-Dateien speichert
          */
         public void speichern(String n) {
