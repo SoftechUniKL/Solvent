@@ -58,6 +58,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	static JButton btnStart ;
 	private static JButton btnEinnahmen;
 	private static JButton btnAusgaben;
+	static JTable Tabelle = new JTable();
 	
 	/**
 	 * Launch the application.
@@ -101,7 +102,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnEinnahmen.setBackground(Color.GRAY);
 		menuBar.add(btnEinnahmen);
 
-		JButton btnTbersicht = new JButton("Monatsuebersicht");
+		/*JButton btnTbersicht = new JButton("Monatsuebersicht");
 		btnTbersicht.setBackground(Color.GRAY);
 		menuBar.add(btnTbersicht);
 
@@ -111,7 +112,7 @@ public class MonatsuebersichtGUI extends JFrame {
 
 		JButton btnPlanung = new JButton("Planung");
 		btnPlanung.setBackground(Color.GRAY);
-		menuBar.add(btnPlanung);
+		menuBar.add(btnPlanung);*/
 
 		btnSparen = new JButton("Sparen");
 		btnSparen.setBackground(Color.GRAY);
@@ -126,29 +127,9 @@ public class MonatsuebersichtGUI extends JFrame {
 		 */
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-			/**	contentPane = new JPanel() {  
-				public void paintComponent(Graphics g) { Image img = Toolkit.getDefaultToolkit().getImage(MonatsuebersichtGUI.class.getResource("/data/background.jpg"));  
-				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);  
-				 } 
-				}; 
-				
-				*/
-				
-				
 				/**
 				 * Creates Labels and Buttons
 				 */
-				
-		    	/**try {
-		    	setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("data/background.jpg")))));
-		    	setLayout(new FlowLayout());
-		    	} catch (IOException g) {
-		    		g.printStackTrace();
-		    	}
-		    	*/
-		    	
 				JButton btnSparziel = new JButton("Neues Sparziel/Schulden hinzufuegen");
 				JButton btnHinzufuegen = new JButton("Neue Buchung hinzufuegen");
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
@@ -164,10 +145,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
 				int dateToday = Integer.parseInt(dateFormatter.format(date));
 				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
-				
-			
-				
-
 				/**
 				 * Determines Layout of the GUI components
 				 */
@@ -224,9 +201,6 @@ public class MonatsuebersichtGUI extends JFrame {
 	    			);
 	    		contentPane.setLayout(gl_contentPane);
 	    		contentPane.removeAll();
-	    	
-	    		
-	    		
 	    		/**
 	    		 * Creates ActionListener for the Buttons "Buchung hinzuf�gen" & "Sparziel hinzuf�gen"
 	    		 */
@@ -268,7 +242,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				contentPane = new JPanel();
 				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				JLabel lblUebersicht = new JLabel("Uebersicht ihrer gesamten Ausgaben");
-				JLabel lblLschen = new JLabel("Um einen Eintrag zu entfernen, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
+				JLabel lblLschen = new JLabel("Zum Loeschen eines Eintrags, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setViewportBorder(null);
 				scrollPane.setBorder(null);
@@ -444,7 +418,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			});
 		
 		/**
-		 * Add ActionListener for Button Einnahmen
+		 * Add ActionListener for Button Sparen
 		 */
 		btnSparen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -463,7 +437,6 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblRestbudget = new JLabel("Uebersicht ihrer Schulden und Sparziele");
 				JLabel lblLoeschen = new JLabel("Zum Loeschen eines Eintrags, klicken Sie bitte auf den entsprechenden Eintrag in der Tabelle");
 				JScrollPane scrollPane = new JScrollPane();
-				JTable Tabelle = new JTable();
 				lblRestbudget.setVerticalAlignment(SwingConstants.TOP);
 				scrollPane.setEnabled(true);
 				scrollPane.setViewportView(Tabelle);

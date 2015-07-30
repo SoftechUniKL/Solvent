@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -33,7 +34,7 @@ public class Sparziel extends JFrame {
 
 public Sparziel () {
 		
-	/**
+		/**
 		 * Creates userdialog and its components for adding new debts and saving targets
 		 */
 		setTitle("Neues Ziel setzen");
@@ -61,7 +62,65 @@ public Sparziel () {
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(now), new Date(now-tagMillis*356),new Date(now+tagMillis*356),Calendar.DATE));
 		spinner.setEditor( new JSpinner.DateEditor(spinner, "dd/MM/yyyy" ) );
-	
+		       
+        /**
+		 * Determines Layout of the GUI components
+		 */
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNewLabel_1)
+										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+									.addGap(22))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblBuchenAls, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+									.addGap(133)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_bezeichnung, GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+								.addComponent(textField_betrag)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(rdbtnSparziel)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(rdbtnSchulden)
+									.addGap(61))))
+						.addComponent(btnFertig))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_1)
+						.addComponent(textField_bezeichnung, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(textField_betrag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_2))
+					.addGap(26)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblBuchenAls)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(rdbtnSparziel)
+							.addComponent(rdbtnSchulden)))
+					.addGap(26)
+					.addComponent(btnFertig)
+					.addContainerGap(180, Short.MAX_VALUE))
+		);
+		contentPane.setLayout(gl_contentPane);
 		/**
 		 * Adds ActionListener for button "btnFertig"
 		 */
@@ -149,65 +208,6 @@ public Sparziel () {
             }      
             }
         );
-		       
-        /**
-		 * Determines Layout of the GUI components
-		 */
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_1)
-										.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 226, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-									.addGap(22))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblBuchenAls, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-									.addGap(133)))
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_bezeichnung, GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-								.addComponent(textField_betrag)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(rdbtnSparziel)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(rdbtnSchulden)
-									.addGap(61))))
-						.addComponent(btnFertig))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1)
-						.addComponent(textField_bezeichnung, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textField_betrag, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_2))
-					.addGap(26)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblBuchenAls)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(rdbtnSparziel)
-							.addComponent(rdbtnSchulden)))
-					.addGap(26)
-					.addComponent(btnFertig)
-					.addContainerGap(180, Short.MAX_VALUE))
-		);
-		contentPane.setLayout(gl_contentPane);
 	}
 
 public static String[][] readCSV(String filename) {
@@ -268,7 +268,7 @@ public static Double verrechnen(){
 		ein_gesamt = ein_gesamt + Double.parseDouble(readCSV("einnahmen")[i][2]);
 	}
 	/**
-	 * Counts all the ecosts
+	 * Counts all the costs
 	 */
 	for (int i = 0; i<readCSV("ausgaben").length; i++){
 		aus_gesamt = aus_gesamt + Double.parseDouble(readCSV("ausgaben")[i][2]);
@@ -284,56 +284,85 @@ public static Double verrechnen(){
  */
 public static Double erreicht(int zeile){
 	double einnahmen = verrechnen();
-	double alle_schulden_bis_aktuelle_position = 0;
-	double einnahmen_minus_schulden_bis_aktuelle_pos = 0;
+	double alle_schulden_bis_akt_pos = 0;
+	double einnahmen_minus_schulden_bis_akt_pos = 0;
 	double gesamtschulden = 0;
-	double alle_sparziele_bis_aktuelle_pos = 0;
+	double alle_sparziele_bis_akt_pos = 0;
 	double einnahmen_minus_schulden_und_sz_bis_akt_pos = 0;
 	String[][] table = readCSV("sparen");
 	
 	try {
 		/**
-		 * Counts the 
+		 * Counts the debts until the current row
 		 */
 		if (table[zeile][1].equals("Schuld")){
 		for(int i = 0; i < zeile; i++){
 			if(table[i][1].equals("Schuld")){
-				alle_schulden_bis_aktuelle_position = alle_schulden_bis_aktuelle_position + Double.parseDouble(table[i][4]);
+				alle_schulden_bis_akt_pos = alle_schulden_bis_akt_pos + Double.parseDouble(table[i][4]);
 			}
 		}
-		einnahmen_minus_schulden_bis_aktuelle_pos = einnahmen - alle_schulden_bis_aktuelle_position;
-		if (einnahmen_minus_schulden_bis_aktuelle_pos >= Double.parseDouble(table[zeile][4])){
+		einnahmen_minus_schulden_bis_akt_pos = einnahmen - alle_schulden_bis_akt_pos;
+		/**
+		 * The value of the current row is returned if the saldo is bigger than it
+		 */
+		if (einnahmen_minus_schulden_bis_akt_pos >= Double.parseDouble(table[zeile][4])){
+			int z = zeile + 1;
+			JOptionPane.showMessageDialog(null,"Herzlichen Glückwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
 			return Double.parseDouble(table[zeile][4]);
 		}
-		else if (einnahmen_minus_schulden_bis_aktuelle_pos < Double.parseDouble(table[zeile][4])){
-			if(einnahmen_minus_schulden_bis_aktuelle_pos < 0){
+		
+		else if (einnahmen_minus_schulden_bis_akt_pos < Double.parseDouble(table[zeile][4])){
+			/**
+			 * If the saldo is smaller than zero, 0.0 is returned
+			 */
+			if(einnahmen_minus_schulden_bis_akt_pos < 0){
 				return 0.0;
 			}
+			/**
+			 * If the saldo is bigger than 0, the saldo itself is returned
+			 */
 			else{
-			return einnahmen_minus_schulden_bis_aktuelle_pos;
+			return einnahmen_minus_schulden_bis_akt_pos;
 			}
 		}
 	}
 	else if (table[zeile][1].equals("Sparziel")){
+		/**
+		 * Counts all the debts 
+		 */
 		for(int i = 0; i<table.length; i++){
 			if (table[i][1].equals("Schuld")){
 				gesamtschulden = gesamtschulden + Double.parseDouble((table[i][4]));
 				}
 			
 		}
+		/**
+		 * Counts the saving targets until the current row
+		 */
 		for(int i = 0; i < zeile; i++){
 			if(table[i][1].equals("Sparziel")){
-				alle_sparziele_bis_aktuelle_pos = alle_sparziele_bis_aktuelle_pos + Double.parseDouble(table[i][4]);
+				alle_sparziele_bis_akt_pos = alle_sparziele_bis_akt_pos + Double.parseDouble(table[i][4]);
 			}
 		}
-		einnahmen_minus_schulden_und_sz_bis_akt_pos = einnahmen - gesamtschulden - alle_sparziele_bis_aktuelle_pos;
+		einnahmen_minus_schulden_und_sz_bis_akt_pos = einnahmen - gesamtschulden - alle_sparziele_bis_akt_pos;
+		/**
+		 * The value of the current row is returned if the saldo is bigger than it
+		 */
 		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(table[zeile][4])){
+			int z = zeile+1;
+			JOptionPane.showMessageDialog(null,"Herzlichen Glückwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
 			return Double.parseDouble(table[zeile][4]);
 		}
 		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(table[zeile][4])){
+			/**
+			 * If the saldo is smaller than zero, 0.0 is returned
+			 */
 			if(einnahmen_minus_schulden_und_sz_bis_akt_pos < 0){
 				return 0.0;
 			}
+			/**
+			 * If the saldo is bigger than 0, the saldo itself is returned
+			 */
 			else{
 				return einnahmen_minus_schulden_und_sz_bis_akt_pos;
 			}

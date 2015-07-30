@@ -27,59 +27,44 @@ import java.util.Date;
 import java.util.Calendar; 
 
 
-	public class Eingabe extends javax.swing.JFrame{
+public class Eingabe extends javax.swing.JFrame{
 		
-		
-		public Eingabe(){
+	public Eingabe(){
 		/**
-		 * Generierung eines Meldungsfensters namens "Neue Buchung" und eines Inhaltsfeldes mit Eingabefeldern und deren Bezeichnungen
+		 * Creates userdialog and its components for adding new debts and saving targets
 		 */
-		final JPanel contentPane;
-		final JTextField textField_bezeichnung;
-		final JTextField textField_betrag;
-		
 		setTitle("Neue Buchung");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(300, 200, 398, 243);
+		final JPanel contentPane;
+		final JTextField textField_bezeichnung;
+		final JTextField textField_betrag;
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
+		textField_bezeichnung = new JTextField();
+		textField_betrag = new JTextField();
 		JLabel lblNewLabel = new JLabel("Datum");	
 		JLabel lblNewLabel_1 = new JLabel("Bezeichnung");	
 		JLabel lblNewLabel_2 = new JLabel("Betrag in \u20ac");
-		
-		textField_bezeichnung = new JTextField();
-		textField_bezeichnung.setColumns(10);	
-		textField_betrag = new JTextField();
-		textField_betrag.setColumns(10);
-		
 		JLabel lblBuchenAls = new JLabel("Buchen als...");
-
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Ausgabe");	
 		JRadioButton rdbtnEinnahme = new JRadioButton("Einnahme");
-		/**
-		 * Gruppiert die Buttons "Einnahme" und "Ausgabe", damit jeweils nur einer der beiden ausgew�hlt werden kann 
-		 */
+		JButton btnFertig = new JButton("Fertig");
 		ButtonGroup bg = new ButtonGroup();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		textField_bezeichnung.setColumns(10);	
+		textField_betrag.setColumns(10);
 		bg.add(rdbtnEinnahme);
 		bg.add(rdbtnNewRadioButton);
-		/**
-		 * Kreiert den Button "Fertig" und die Spinner f�r das Datum
-		 */
-		JButton btnFertig = new JButton("Fertig");
-		
 		long now = (new Date()).getTime();
 		long tagMillis = 24*60*60*1000;
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(now), new Date(now-tagMillis*356),new Date(now+tagMillis*356),Calendar.DATE));
 		spinner.setEditor( new JSpinner.DateEditor(spinner, "dd/MM/yyyy" ) );
-		
-		
-		       
-        /**
-         * Modifiziert das Fenster "neue Buchung" und gibt die Positionen der Eingabefelder, Buttons und Spinner an 
-         */
+		     
+		 /**
+		 * Determines Layout of the GUI components
+		 */
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -127,12 +112,13 @@ import java.util.Calendar;
 		);
 		contentPane.setLayout(gl_contentPane);
 	
-		
-		
+		/**
+		 * Adds ActionListener for button "btnFertig"
+		 */
 		btnFertig.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e){
         	/**
-        	 * Wenn in das Textfeld Bezeichnung nichts eingegeben wurde, wird eine Fehlermeldung ausgeworfen
+        	 * Exception handling for wrong inputs
         	 */
         	if (textField_bezeichnung.getText().equals("") ) {
     			JFrame f = new JFrame( "Achtung" );
@@ -141,9 +127,6 @@ import java.util.Calendar;
     		    f.add( new JLabel( "Bitte geben Sie eine Bezeichnung an!"));
     		    f.setVisible( true );   
         	}
-        	/**
-        	 * Wenn in das Textfeld Betrag nichts eingegeben wurde, wird eine Fehlermeldung ausgeworfen
-        	 */
     		else if (textField_betrag.getText().equals("")) {
     			JFrame f = new JFrame( "Achtung" );
     		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
@@ -153,10 +136,12 @@ import java.util.Calendar;
     		}
     		else  {
     			try {
+    				/**
+        			 * Tries to get a double value from the textfield "textField_betrag"
+        			 */
             		Double.parseDouble(textField_betrag.getText());
             		/**
-            		 * Wenn einer der beiden Buttons "Einnahme" oder "Ausgabe" angeklickt wurde, werden die eingegebenen 
-            		 * Informationen in der entsprechenden CSV Datei gespeichert, andernfalls wird eine Felhermeldung ausgegeben
+            		 * Saves the input data depending on their type 
             		 */
             		if (rdbtnNewRadioButton.isSelected()){
         				speichern("ausgaben");
@@ -167,16 +152,19 @@ import java.util.Calendar;
         				dispose();
         				}
         			else {
+        				/**
+        				 * Opens message box when there is no type selected
+        				 */
         				JFrame f = new JFrame( "Achtung" );
             		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
             		    f.setBounds(250, 250, 550, 100);
             		    f.add( new JLabel( "Bitte waehlen Sie aus, ob es sich um eine Einnahme oder eine Ausgabe handelt!") );
             		    f.setVisible( true );
-        		}
-            		} 
+        			}
+            	} 
     			/**
-    			 * Handelt es sich, bei dem f�r den Betrag eingegebenen Wert, nicht um eine Zahl, wird eine Fehlermeldung ausgegeben
-    			 */
+        		* Catches NumberFormatException
+        		*/
     			catch (NumberFormatException ex) {
     				JFrame f = new JFrame( "Achtung" );
         		    f.setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
@@ -185,12 +173,11 @@ import java.util.Calendar;
         		    f.setVisible( true );
             		}
     		}
-
         } 
         /**
-         * Generieren der Funktion speichern, welche die zuvor ausgew�hlten Informationen abh�ngig von ihrer Herkunft "Einnahmen" oder "Ausgaben"
-         * in 2 gleichnamige CSV-Dateien speichert
-         */
+        * Function to save the data in sparen.csv
+        * @param n
+        */
         public void speichern(String n) {
     		FileWriter fw;
     		try {
@@ -207,12 +194,8 @@ import java.util.Calendar;
     			System.out.println("Daten konnten nicht gespeichert werden!");
     			e.printStackTrace();
     			}
-        } 
-        
-        
-      
-        
+        	} 
         }
     );	
 }
-	}
+}
