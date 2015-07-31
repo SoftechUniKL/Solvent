@@ -307,7 +307,7 @@ public static Double erreicht(int zeile){
 		 */
 		if (einnahmen_minus_schulden_bis_akt_pos >= Double.parseDouble(table[zeile][4])){
 			int z = zeile + 1;
-			JOptionPane.showMessageDialog(null,"Herzlichen Glückwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
+			JOptionPane.showMessageDialog(null,"Herzlichen Glueckwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
 			return Double.parseDouble(table[zeile][4]);
 		}
 		
@@ -350,7 +350,7 @@ public static Double erreicht(int zeile){
 		 */
 		if (einnahmen_minus_schulden_und_sz_bis_akt_pos >= Double.parseDouble(table[zeile][4])){
 			int z = zeile+1;
-			JOptionPane.showMessageDialog(null,"Herzlichen Glückwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
+			JOptionPane.showMessageDialog(null,"Herzlichen Glueckwunsch, sie haben ihr "+ z  +". Ziel erreicht!");
 			return Double.parseDouble(table[zeile][4]);
 		}
 		else if(einnahmen_minus_schulden_und_sz_bis_akt_pos < Double.parseDouble(table[zeile][4])){
