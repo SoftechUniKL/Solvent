@@ -40,7 +40,9 @@ public class Testerinho {
 		
 	}
 	*/
-	
+	/**
+	 * Test der Berechnung von Einnahmen und Ausgaben
+	 */
 	@Test
 	public void testEinnahmenAusgaben(){
 		try {
@@ -74,7 +76,9 @@ public class Testerinho {
 		
 		
 	}
-	
+	/**
+	 * Testen der Verrechning von Einnahmen und Ausgaben
+	 */
 	@Test
 	public void testSparziel(){
 		try {
@@ -117,7 +121,9 @@ public class Testerinho {
 		
 		
 	}
-	
+	/**
+	 * Testen des CSV readers für die ausgaben-/ und Einnahmenübersicht
+	 */
 	@Test
 	public void testCSVReader(){
 		try {
@@ -138,7 +144,9 @@ public class Testerinho {
 		
 		
 	}
-	
+	/**
+	 * testen des Mainframes
+	 */
 	@Test
 	public void testRun(){
 	
