@@ -35,7 +35,7 @@ public class Eingabe extends javax.swing.JFrame{
 		 */
 		setTitle("Neue Buchung");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(300, 200, 398, 243);
+		setBounds(550, 250, 300, 243);
 		final JPanel contentPane;
 		final JTextField textField_bezeichnung;
 		final JTextField textField_betrag;

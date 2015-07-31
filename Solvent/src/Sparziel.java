@@ -39,10 +39,10 @@ public Sparziel () {
 		 */
 		setTitle("Neues Ziel setzen");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(300, 200, 571, 270);
+		setBounds(550, 250, 571, 270);
 		contentPane = new JPanel();
 		ButtonGroup bg = new ButtonGroup();
-		JLabel lblNewLabel = new JLabel("Datum bis wann das Ziel erreicht werden soll:");	
+		JLabel lblNewLabel = new JLabel("Ziel soll erreicht werden bis:");	
 		JLabel lblNewLabel_1 = new JLabel("Bezeichnung:");	
 		JLabel lblNewLabel_2 = new JLabel("Betrag in \u20AC:");
 		JLabel lblBuchenAls = new JLabel("Buchen als...");
