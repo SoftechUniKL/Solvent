@@ -44,7 +44,11 @@ import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYDataset;
 
 import com.opencsv.CSVReader;
 
@@ -55,6 +59,7 @@ public class MonatsuebersichtGUI extends JFrame {
 	private Eingabe eingabe;
 	private JButton btnSparen;
 	static JButton btnStart;
+	private JButton btnUebersicht;
 	private static JButton btnEinnahmen;
 	private static JButton btnAusgaben;
 	static JTable Tabelle = new JTable();
@@ -106,6 +111,10 @@ public class MonatsuebersichtGUI extends JFrame {
 		btnSparen = new JButton("Sparen");
 		btnSparen.setBackground(Color.cyan);
 		menuBar.add(btnSparen);
+		
+		btnUebersicht = new JButton ("Uebersicht");
+		btnUebersicht.setBackground(Color.LIGHT_GRAY);
+		menuBar.add(btnUebersicht);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -125,13 +134,17 @@ public class MonatsuebersichtGUI extends JFrame {
 				JLabel lblMonatsbersicht = new JLabel("Monatsuebersicht");
 				JLabel lblNewLabel_1 = new JLabel("Einnahmen:");
 				JLabel lblNewLabel_2 = new JLabel("Ausgaben:");
-				JLabel lblHierEinnahmenEinfgen = new JLabel(gesamt_monat ("einnahmen")+" \u20ac");
-				JLabel lblHierAusgabenEinfgen = new JLabel(gesamt_monat ("ausgaben")+" \u20ac");
+				Date date = java.util.Calendar.getInstance().getTime();
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
+				int date_int = Integer.parseInt(dateFormatter.format(date));
+				JLabel lblHierEinnahmenEinfgen = new JLabel(gesamt_monat ("einnahmen", date_int)+" \u20ac");
+				JLabel lblHierAusgabenEinfgen = new JLabel(gesamt_monat ("ausgaben",date_int)+" \u20ac");
 				JLabel lblRestbudget = new JLabel("Verbleibendes Budget:");
+			
 				
-				JLabel lblRestbudgetEinfgen = new JLabel(" "+ String.valueOf(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben")))+" \u20ac");
+				JLabel lblRestbudgetEinfgen = new JLabel(" "+ String.valueOf(Double.parseDouble(gesamt_monat("einnahmen",date_int))-Double.parseDouble(gesamt_monat("ausgaben",date_int)))+" \u20ac");
 				lblRestbudgetEinfgen.setOpaque(true);
-				if(Double.parseDouble(gesamt_monat("einnahmen"))-Double.parseDouble(gesamt_monat("ausgaben"))<0){
+				if(Double.parseDouble(gesamt_monat("einnahmen", date_int))-Double.parseDouble(gesamt_monat("ausgaben", date_int))<0){
 					lblRestbudgetEinfgen.setBackground(Color.RED);
 				}
 				else {
@@ -139,10 +152,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				}
 				
 				String[] months = {"Januar","Februar","Maerz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"};
-				Date date = java.util.Calendar.getInstance().getTime();
-				SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
-				int dateToday = Integer.parseInt(dateFormatter.format(date));
-				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[dateToday-1]);
+				JLabel lblNewLabel = new JLabel("Ihre Uebersicht fuer den Monat " + months[date_int-1]);
 				/**
 				 * Determines Layout of the GUI components
 				 */
@@ -562,6 +572,55 @@ public class MonatsuebersichtGUI extends JFrame {
 			}	
 		});
 		btnStart.doClick();
+		
+		/**
+		 * Add ActionListener for Button Uebersicht
+		 */
+		btnUebersicht.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/**
+				 * Creates basic GUI components
+				 */
+				XYDataset ds = createDataset();
+                JFreeChart chart = ChartFactory.createXYLineChart("Uebersicht","Monat", "Betrag", ds, PlotOrientation.VERTICAL, true, true, false);
+                ChartPanel chartPanel = new ChartPanel(chart);
+                contentPane = new JPanel();
+        		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        		setContentPane(contentPane);
+        		JLabel lblIhreJahresbersicht = new JLabel("Ihre Jahresuebersicht");
+        		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+        		gl_contentPane.setHorizontalGroup(
+        			gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addContainerGap()
+        					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+        						.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(lblIhreJahresbersicht))
+        					.addContainerGap(28, Short.MAX_VALUE))
+        		);
+        		gl_contentPane.setVerticalGroup(
+        			gl_contentPane.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_contentPane.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(lblIhreJahresbersicht)
+        					.addGap(18)
+        					.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap(23, Short.MAX_VALUE))
+        		);
+        		contentPane.setLayout(gl_contentPane);
+			}
+			/**
+			 * Commits data from CSV-data to the JFreeChart
+			 * @return
+			 */
+			private  XYDataset createDataset() {
+				DefaultXYDataset ds = new DefaultXYDataset();      
+				double[][] einn = { {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12} , {Double.parseDouble(gesamt_monat("einnahmen", 1)),Double.parseDouble(gesamt_monat("einnahmen", 2)),Double.parseDouble(gesamt_monat("einnahmen", 3)), Double.parseDouble(gesamt_monat("einnahmen", 4)),Double.parseDouble(gesamt_monat("einnahmen", 5)),Double.parseDouble(gesamt_monat("einnahmen", 6)), Double.parseDouble(gesamt_monat("einnahmen", 7)),Double.parseDouble(gesamt_monat("einnahmen", 8)),Double.parseDouble(gesamt_monat("einnahmen", 9)), Double.parseDouble(gesamt_monat("einnahmen", 10)),Double.parseDouble(gesamt_monat("einnahmen", 11)),Double.parseDouble(gesamt_monat("einnahmen", 12))} };
+				double[][] ausg = { {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, {Double.parseDouble(gesamt_monat("ausgaben", 1)), Double.parseDouble(gesamt_monat("ausgaben", 2)),Double.parseDouble(gesamt_monat("ausgaben", 3)), Double.parseDouble(gesamt_monat("ausgaben", 4)),Double.parseDouble(gesamt_monat("ausgaben", 5)),Double.parseDouble(gesamt_monat("ausgaben", 6)),Double.parseDouble(gesamt_monat("ausgaben", 7)),Double.parseDouble(gesamt_monat("ausgaben", 8)), Double.parseDouble(gesamt_monat("ausgaben", 9)), Double.parseDouble(gesamt_monat("ausgaben", 10)),Double.parseDouble(gesamt_monat("ausgaben", 11)), Double.parseDouble(gesamt_monat("ausgaben", 12))} };
+				ds.addSeries("Einnahmen", einn);
+				ds.addSeries("Ausgaben", ausg);
+				return ds;}
+			});
 	}
 
 	public static ArrayList<Posten> CSVReader(String filename) {
@@ -627,21 +686,18 @@ public class MonatsuebersichtGUI extends JFrame {
 	 * @param filename
 	 * @return
 	 */
-	public static String gesamt_monat(String filename) {
+	public static String gesamt_monat(String filename, int month) {
 		/**
 		 * Variables get initialized
 		 */
 		int number_of_rows = 0;
-		Date date = java.util.Calendar.getInstance().getTime();
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("MM");
-		String dateToday = dateFormatter.format(date);
+		
 		/**
 		 * Size of the needed array gets determined
 		 */
 		try {
 			java.io.BufferedReader FileReader = new java.io.BufferedReader(
-					new java.io.FileReader(new java.io.File("data/" + filename
-							+ ".csv")));
+					new java.io.FileReader(new java.io.File("data/" + filename+ ".csv")));
 			String zeile = "";
 			while (null != (zeile = FileReader.readLine())) {
 				number_of_rows++;
@@ -649,8 +705,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			FileReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out
-					.println("Groesse des Arrays kann nicht festgelegt werden ");
+			System.out.println("Groesse des Arrays kann nicht festgelegt werden ");
 		}
 		/**
 		 * Array gets filled with data from the CSV-data
@@ -658,8 +713,7 @@ public class MonatsuebersichtGUI extends JFrame {
 		String[][] file_as_array = new String[number_of_rows][4];
 		try {
 			java.io.BufferedReader FileReader = new java.io.BufferedReader(
-					new java.io.FileReader(new java.io.File("data/" + filename
-							+ ".csv")));
+					new java.io.FileReader(new java.io.File("data/" + filename+ ".csv")));
 			String zeile = "";
 			int i = 0;
 			while (null != (zeile = FileReader.readLine())) {
@@ -672,8 +726,7 @@ public class MonatsuebersichtGUI extends JFrame {
 			FileReader.close();
 			double gesamt = 0.0;
 			for (int k = 0; k < file_as_array.length; k++) {
-				if (Integer.parseInt(file_as_array[k][0].substring(3, 5)) == Integer
-						.parseInt(dateToday)) {
+				if (Integer.parseInt(file_as_array[k][0].substring(3, 5)) == month) {
 					gesamt = gesamt + Double.parseDouble(file_as_array[k][2]);
 				}
 			}
