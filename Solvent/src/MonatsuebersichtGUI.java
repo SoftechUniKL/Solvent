@@ -455,7 +455,7 @@ public class MonatsuebersichtGUI extends JFrame {
 				 */
 				Tabelle.setEditingColumn(0);
 				Tabelle.setRowSelectionAllowed(true);
-				Tabelle.setModel(new DefaultTableModel(table_array,new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag (\u20ac)", "Bereits erreicht (\u20ac)", "Prozent"}));
+				Tabelle.setModel(new DefaultTableModel(table_array,new String[] {"Bezeichnung", "Kategorie", "Startdatum", "Zieldatum", "Betrag (\u20ac)", "Bereits erreicht (\u20ac)", "Prozent (%)"}));
 				for (int c = 0; c < Tabelle.getColumnCount(); c++){
 				    Class<?> col_class = Tabelle.getColumnClass(c);
 				    Tabelle.setDefaultEditor(col_class, null);        
