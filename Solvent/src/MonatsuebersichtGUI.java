@@ -420,10 +420,6 @@ public class MonatsuebersichtGUI extends JFrame {
 			contentPane.setLayout(gl_contentPane);
 			contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{lblUebersicht}));
 		}
-	
-			
-		
-
 			});
 		
 		/**
@@ -624,17 +620,11 @@ public class MonatsuebersichtGUI extends JFrame {
 	}
 
 	public static ArrayList<Posten> CSVReader(String filename) {
-		ArrayList<Posten> file_as_array = new ArrayList<Posten>(); // Initialisieren
-																	// der
-																	// Ausgaben
-																	// als Array
-																	// mit
-																	// Posten
+		ArrayList<Posten> file_as_array = new ArrayList<Posten>(); 
 		try {
-			// Zeilenweises Einlesen der Daten
+
 			/**
-			 * Reader for die Einnahmen und Ausgabenübersicht (In Anlehnung an
-			 * Beispiel)
+			 * Reader for  "Einnahmen und Ausgabenübersicht" (based on the given Example)
 			 */
 
 			CSVReader reader = new CSVReader(new FileReader(filename));
@@ -642,25 +632,22 @@ public class MonatsuebersichtGUI extends JFrame {
 			while ((nextLine = reader.readNext()) != null) {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				/**
-				 * Datum einlesen
+				 * read date
 				 */
 				Date datum = df.parse(nextLine[0]);
 				/**
-				 * Bezeichnung einlesen
+				 * read purpose "Bezeichnung"
 				 */
 				String bezeichnung = nextLine[1];
 				/**
-				 * Betrag einlesen
+				 * read value
 				 */
 				double betrag = Double.parseDouble(nextLine[2]);
 				/**
-				 * Die eingelesenen Posten dem Array Hinzufügen, um sie für
-				 * die weitere Verwendung referenzierbar zu machen
+				 * Information is saved as array for further calculation
 				 */
-				file_as_array.add(new Posten(datum, bezeichnung, betrag)); // Posten
-																			// dem
-																			// Ausgabenarray
-																			// Hinzufuegen
+				file_as_array.add(new Posten(datum, bezeichnung, betrag)); 
+																			
 			}
 			reader.close();
 
