@@ -93,9 +93,10 @@ public class MonatsuebersichtGUI extends JFrame {
 		 * Add Buttons
 		 */
 		menuBar = new JMenuBar();
-		menuBar.setBackground(Color.LIGHT_GRAY);
+		menuBar.setBackground(Color.cyan);
+		menuBar.setOpaque(true);
 		setJMenuBar(menuBar);
-
+		
 		btnStart = new JButton("Start");
 		btnStart.setBackground(Color.LIGHT_GRAY);
 		menuBar.add(btnStart);
